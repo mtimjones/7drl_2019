@@ -37,7 +37,9 @@ Each has their own form of reward.  Combat system will be both simple and
 deterministic. Each process has stats that indicate the health, attack and 
 defense capabilities. A simple equation will determine the hit probability:
 
+```
 p( hit ) = ( att / ( att + def ) )
+```
 
 The damage is defined by the exploit being used (having a certain amount 
 of random damage possibility, such as 1-3 damage potential).  Once a 
