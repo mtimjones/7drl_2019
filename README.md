@@ -358,9 +358,9 @@ or a path from entry to exit nodes.
      123456789012345678901234567890123456789012345678901234567890123456789012345678901234
     1+-Processes------------------------------+-Network---------------------------------+
     2| PID   Name      AT  DE  LV  ATTR  ENRG |                                         |
-    3| 8211  sentry     0   3   1  B.D..    8 |[xx.xx.xx.xx]- xx.xx.xx.xx - xx.xx.xx.xx |
-    4| 1981  daemon     2   1   1  .A...   10 |      |             |             |      |
-    5| 9921  login      3   3   1  ....@   20 | xx.xx.xx.xx - xx.xx.xx.xx - xx.xx.xx.xx |
+    3| 8211  sentry     0   3   1  B D      8 |[xx.xx.xx.xx]- xx.xx.xx.xx - xx.xx.xx.xx |
+    4| 1981  daemon     2   1   1   A      10 |      |             |             |      |
+    5| 9921  login      3   3   1      @   20 | xx.xx.xx.xx - xx.xx.xx.xx - xx.xx.xx.xx |
     6|                                        |      |             |             |      |
     7|                                        | xx.xx.xx.xx - xx.xx.xx.xx - xx.xx.xx.xx |
     8|                                        |      |             |             |      |
