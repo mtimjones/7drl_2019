@@ -120,6 +120,8 @@ as armor).
 
 ** need to identify variety of behaviors for processes and bosses in the network nodes.
 
+...
+
       Process   Description                     Attr   Rate Attack / Defense  Health
       login     This process represents the     @      100%                       15
                 user’s login and the goal is
@@ -149,12 +151,16 @@ as armor).
       executive Final boss process, spawns a        S  100%      X / Y
                 copy of itself before death.
 
+...
+
 
 # Process Attributes
 
 The process attributes define the necessary information for a process. 
 Some is displayed on the process list, some is hidden from the user and 
 used internally.
+
+...
 
       Attribute  Description                        Exposed/Hidden
       Type       The type of process attribute.     Exposed
@@ -176,6 +182,8 @@ used internally.
                  dead, suspended, etc.).
       Hackable   Boolean defines whether this       Exposed (attr)
                  process can be hacked.
+
+...
 
 
 # Major Structures
