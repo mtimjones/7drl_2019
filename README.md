@@ -353,6 +353,7 @@ or a path from entry to exit nodes.
 # Proposed UI Design
 
 ...
+
               1         2         3         4         5         6         7        8
      123456789012345678901234567890123456789012345678901234567890123456789012345678901234
     1+-Processes------------------------------+-Network---------------------------------+
@@ -380,6 +381,7 @@ or a path from entry to exit nodes.
    23|                                        |                                         |
    24|$ bash 8211                             |damon attacks for 3 energy.              |
    25+----------------------------------------+-----------------------------------------+
+
 ...
 
 # Notes
@@ -393,7 +395,7 @@ or a path from entry to exit nodes.
 
 - [x]  Add UI (ncurses-based). (Reused)
 
-- [ ]  Add player input.
+- [ ]  Add player input. (Reused)
 
 - [ ]  Add process definitions, including callbacks.
 
@@ -407,5 +409,5 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the hack command.
 
-- [ ]  C
+- [ ]  Complete the task list.
 
