@@ -69,8 +69,7 @@ support replay ability.  The user may not leave a node until all enemy
 processes are killed or paused. A suspended process will allow the user 
 to exit if needed (but the user gets no reward for clearing the node).
 
-...
-
+```
       Command    Type      Damage     Notes                      Level
       Help       Standard  N/A        Lists the available            0
                                       commands to the user.
@@ -110,8 +109,8 @@ to exit if needed (but the user gets no reward for clearing the node).
                                       round.
 
 * Help, Connect, and Exit do not count as a turn.
+```
 
-...
 
 # Process Types
 
@@ -122,8 +121,7 @@ as armor).
 
 ** need to identify variety of behaviors for processes and bosses in the network nodes.
 
-...
-
+```
       Process   Description                     Attr   Rate Attack / Defense  Health
       login     This process represents the     @      100%                       15
                 user’s login and the goal is
@@ -152,8 +150,7 @@ as armor).
                 itself.
       executive Final boss process, spawns a        S  100%      X / Y
                 copy of itself before death.
-
-...
+```
 
 
 # Process Attributes
@@ -162,8 +159,7 @@ The process attributes define the necessary information for a process.
 Some is displayed on the process list, some is hidden from the user and 
 used internally.
 
-...
-
+```
       Attribute  Description                        Exposed/Hidden
       Type       The type of process attribute.     Exposed
       Energy     The amount of health for the       Exposed
@@ -184,9 +180,7 @@ used internally.
                  dead, suspended, etc.).
       Hackable   Boolean defines whether this       Exposed (attr)
                  process can be hacked.
-
-...
-
+```
 
 # Major Structures
 
@@ -194,7 +188,7 @@ The node structure defines a node and its connectivity to other nodes. A
 level of nodes exists only while the player is in that level (otherwise, 
 they are freed and the player cannot return).
 
-...
+```
 typedef struct node_t
 {
    char *ip_adrs;
@@ -204,23 +198,23 @@ typedef struct node_t
    function_t *node_entry_function;
    function_t *node_exit_function;
 } node_t;
-...
+```
 
 The stats structure defines the common statistics used by the player and 
 all enemies.
 
-...
+```
 typedef struct stats_t
 {
    uint8 attack;
    uint8 defense;
    uint8 energy;
 } stats_t;
-...
+```
 
 The attributes structure defines the attributes for a given process.
 
-...
+```
 typedef struct attributes_t
 {
    bool hackable; // H
@@ -230,11 +224,11 @@ typedef struct attributes_t
    bool buff;     // B
    bool special;  // S, use process function for behavior.
 } attributes_t;
-...
+```
 
 The player and enemies are all represented by process_t.
 
-...
+```
 typedef struct process_t
 {
    process_type_t process_type;
@@ -247,7 +241,7 @@ typedef struct process_t
    uint8 state_value; // Value for current state (suspend, etc.).
    uint8 action_rate; // 1 = every turn.
 } process_t;
-...
+```
 
 # Game Loop
 
@@ -278,41 +272,33 @@ player about what they do), but they can also communicate other information
 
 In this example, the final boss communicates its twist at the end:
 
-...
-
+```
 [executive]: I will respawn once more.
-
-...
+```
 
 Here, the final boss taunts the player:
 
-...
-
+```
 [executive]: Your process is half health; how unfortunate.
-
-...
+```
 
 And in this case, the 'fork' process indicates that it's spawning more of
 its minions:
 
-...
-
+```
 [fork]: More minions incoming.
-
-...
+```
 
 Processes can also communicate information through the console (not chat) as
 follows to provide hints on what they do:
 
-...
-
+```
 fork [6421]: spawned a new minion [9531].
 
 encrypt [3751]: encrypted process ids.
 
 sentry [8532]: buffed defense for processes.
-
-...
+```
 
 # Network Generation
 
@@ -324,7 +310,7 @@ based upon the level.
 This solution exists to avoid random networks that may lack connectivity
 or a path from entry to exit nodes.
 
-...
+```
       1)                      2)                      3)
 
       +---+                          +---+                          +---+
@@ -369,13 +355,12 @@ or a path from entry to exit nodes.
       +---+  +---+  +---+     +---+  +---+  +---+     +---+  +---+  +---+
       |   |--|Ext|--|   |     |Ext|--|   |--|   |     |Ext|  |   |--|   |
       +---+  +---+  +---+     +---+  +---+  +---+     +---+  +---+  +---+
-...
+```
 
 
 # Proposed UI Design
 
-...
-
+```
               1         2         3         4         5         6         7        8
      123456789012345678901234567890123456789012345678901234567890123456789012345678901234
     1+-Processes------------------------------+-Network---------------------------------+
@@ -403,8 +388,7 @@ or a path from entry to exit nodes.
    23|                                        |                                         |
    24|$ bash 8211                             |damon attacks for 3 energy.              |
    25+----------------------------------------+-----------------------------------------+
-
-...
+```
 
 # Notes
 
