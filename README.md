@@ -67,6 +67,8 @@ support replay ability.  The user may not leave a node until all enemy
 processes are killed or paused. A suspended process will allow the user 
 to exit if needed (but the user gets no reward for clearing the node).
 
+...
+
       Command    Type      Damage     Notes                      Level
       Help       Standard  N/A        Lists the available            0
                                       commands to the user.
@@ -106,6 +108,8 @@ to exit if needed (but the user gets no reward for clearing the node).
                                       round.
 
 * Help, Connect, and Exit do not count as a turn.
+
+...
 
 # Process Types
 
