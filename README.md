@@ -265,31 +265,39 @@ player about what they do), but they can also communicate other information
 In this example, the final boss communicates its twist at the end:
 
 ...
+
 [executive]: I will respawn once more.
+
 ...
 
 Here, the final boss taunts the player:
 
 ...
+
 [executive]: Your process is half health; how unfortunate.
+
 ...
 
 And in this case, the 'fork' process indicates that it's spawning more of
 its minions:
 
 ...
+
 [fork]: More minions incoming.
+
 ...
 
 Processes can also communicate information through the console (not chat) as
 follows to provide hints on what they do:
 
 ...
+
 fork [6421]: spawned a new minion [9531].
 
 encrypt [3751]: encrypted process ids.
 
 sentry [8532]: buffed defense for processes.
+
 ...
 
 # Network Generation
