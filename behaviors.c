@@ -3,14 +3,13 @@
 
 void daemon_behavior( process_t *process )
 {
-   static int i = 0;
+   char line[80];
 
-   if ( !i )
+   if ( hit( process->stats.attack, getPlayerDefense( ) ) )
    {
-      char line[80];
-      sprintf( line, "[%04d] Daemon says hi.", process->pid );
+      int damage = process->stats.base_damage + getRand( process->stats.ext_damage );
+      sprintf( line, "[%04d] Daemon hits for %d.", process->pid, damage );
       add_chat_message( line );
-//      i = 1;
    }
 
    return;

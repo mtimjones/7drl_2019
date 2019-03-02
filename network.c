@@ -104,3 +104,24 @@ void execute_network( void )
 
    return;
 }
+
+
+process_t *find_process_by_pid( unsigned short pid )
+{
+   process_t *proc = ( process_t * ) 0;
+
+   for ( int i = 0 ; i < MAX_PROCESSES_PER_NODE ; i++ )
+   {
+      if ( is_process_active( cur_node->processes[ i ] ) )
+      {
+         if ( cur_node->processes[ i ]->pid == pid )
+         {
+            proc = cur_node->processes[ i ];
+            break;
+         }
+      }
+   }
+
+   return proc;
+}
+

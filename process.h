@@ -18,6 +18,8 @@ typedef struct stats_t
    int defense;
    int energy;
    int level;
+   int base_damage;
+   int ext_damage;
 } stats_t;
 
 typedef struct attributes_t
@@ -58,3 +60,7 @@ void display_player( WINDOW *window, int line );
 void display_process( WINDOW *window, int line, process_t *process );
 int  is_process_active( process_t *process );
 void execute_process( process_t *process );
+int  hit( int attack, int defense );
+int  getPlayerDefense( void );
+int  getPlayerAttack( void );
+

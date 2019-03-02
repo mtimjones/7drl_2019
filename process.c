@@ -45,6 +45,8 @@ process_t *create_process( process_type_t type, int level )
          process->stats.energy = 10+getRand((level*4));
          process->action_rate = getRand(3)+1;
          process->function = &daemon_behavior;
+         process->stats.base_damage = 3;
+         process->stats.ext_damage = (level*2);
          break;
 
       default:
@@ -115,5 +117,23 @@ void execute_process( process_t *process )
          ( process->function )( process );
       }
    }
+}
+
+
+int  hit( int attack, int defense )
+{
+   return ( getSRand( ) < ( (float)attack / ( (float)attack + (float)defense ) ) );
+}
+
+
+int getPlayerDefense( void )
+{
+   return ulogin.stats.defense;
+}
+
+
+int getPlayerAttack( void )
+{
+   return ulogin.stats.attack;
 }
 
