@@ -401,19 +401,77 @@ or a path from entry to exit nodes.
 
 - [x]  Add UI (ncurses-based). (Reused)
 
-- [ ]  Add player input. (Reused)
+- [x]  Add player input. (Reused)
 
-- [ ]  Add process definitions, including callbacks.
+- [x]  Add process definitions, including callbacks.
 
 - [ ]  Add network generation and display.
 
-- [ ]  Add chat window.
+- [x]  Add chat window.
 
-- [ ]  Add process window and display.
+- [x]  Add process window and display.
 
 - [ ]  Implement the bash command.
 
+- [ ]  Implement the minion process.
+
 - [ ]  Implement the hack command.
 
-- [ ]  Complete the task list.
+- [ ]  Implement the conflict system.
+
+- [ ]  Implement the experience and level system.
+
+- [ ]  Implement the connect command to traverse the network.
+
+- [ ]  Implement the wait command.
+
+- [ ]  Implement the bash command.
+
+- [ ]  Implement the hack command and the QTE system.
+
+- [ ]  Implement the cut command.
+
+- [ ]  Implement the suspend command.
+
+- [ ]  Implement the wall command.
+
+- [ ]  Implement the kill command.
+
+- [ ]  Implement the trap command.
+
+- [ ]  Implement the barrier command.
+
+- [ ]  Implement the counter command.
+
+- [ ]  Implement the slice command.
+
+- [ ]  Implement the TBD buff command.
+
+- [ ]  Implement the ulogin process callback function.
+
+- [ ]  Implement the sentry process.
+
+- [ ]  Implement the daemon process.
+
+- [ ]  Implement the encrypt process.
+
+- [ ]  Implement the watchdog process.
+
+- [ ]  Implement the upgrade process.
+
+- [ ]  Implement the fork process.
+
+- [ ]  Implement the random process.
+
+- [ ]  Implement the Executive process.
+
+- [ ]  Implement the basic game loop.
+
+- [ ]  Implement the death process and the morgue.
+
+- [ ]  Implement a way for processes to communicate with the user (via chat).
+
+- [ ]  Implement network initialization via network templates.
+
+- [ ]  Implement the end game (perhaps in the context of the Executive process).
 
