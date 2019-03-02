@@ -24,10 +24,15 @@ void handle_user_input( void )
    }
    else if ( c == 0x0d )
    {
+      int take_turn;
+
       add_message( user_line );
-      system_exec( &user_line[ 2 ] );
+      take_turn = system_exec( &user_line[ 2 ] );
       init_user_input( );
-      execute_network( );
+      if ( take_turn )
+      {
+         execute_network( );
+      }
    }
    else if ( isprint( c ) )
    {

@@ -427,7 +427,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the connect command to traverse the network.
 
-- [ ]  Implement the wait command.
+- [x]  Implement the wait command.
 
 - [ ]  Implement the bash command.
 

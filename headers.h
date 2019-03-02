@@ -46,7 +46,7 @@ extern unsigned int GameTime;
 void init_user_input( void );
 void handle_user_input( void );
 char *get_user_input_line( void );
-void system_exec( char *line );
+int system_exec( char *line );
 
 #if 0
 // Helpers API

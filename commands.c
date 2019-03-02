@@ -26,17 +26,19 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   16
+#define MAX_COMMANDS   2
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
 void help_command( args *arguments );
+void wait_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
    { "help",    "Get help about available system commands.", help_command, 1, 0 },
+   { "wait",    "Wait, skip a turn.", wait_command, 1, 1 },
 };
 
-void system_command( args *arguments )
+int system_command( args *arguments )
 {
    for ( int i = 0 ; i < MAX_COMMANDS ; i++ )
    {
@@ -46,13 +48,13 @@ void system_command( args *arguments )
       if ( strncmp( arguments->args[ 0 ], command_list[ i ].name, size ) == 0 )
       {
          ( command_list[ i ].function )( arguments );
-         return;
+         return command_list[ i ].take_turn;
       }
    }
 
    add_message( "Unknown command." );
 
-   return;
+   return 0;
 }
 
 
@@ -85,7 +87,7 @@ void parse_args( char *line, args *arguments )
 }
 
 
-void system_exec( char *line )
+int system_exec( char *line )
 {
    args arguments = { 0, (char*)0, (char*)0 };
 
@@ -93,10 +95,10 @@ void system_exec( char *line )
 
    if ( arguments.num_args > 0 )
    {
-      system_command( &arguments );
+      return system_command( &arguments );
    }
 
-   return;
+   return 0;
 }
 
 
@@ -111,5 +113,10 @@ void help_command( args *arguments )
       add_message( line );
    }
 
+   return;
+}
+
+void wait_command( args *arguments )
+{
    return;
 }
