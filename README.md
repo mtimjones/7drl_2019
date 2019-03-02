@@ -419,9 +419,7 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the basic game loop.
 
-- [ ]  Implement the bash command.
-
-- [ ]  Implement the minion process.
+- [x]  Implement the bash command.
 
 - [ ]  Implement the hack command.
 
@@ -432,8 +430,6 @@ or a path from entry to exit nodes.
 - [ ]  Implement the connect command to traverse the network.
 
 - [x]  Implement the wait command.
-
-- [x]  Implement the bash command.
 
 - [ ]  Implement the hack command and the QTE system.
 
@@ -459,7 +455,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the sentry process.
 
-- [ ]  Implement the daemon process.
+- [x]  Implement the daemon process.
 
 - [ ]  Implement the encrypt process.
 
@@ -468,6 +464,8 @@ or a path from entry to exit nodes.
 - [ ]  Implement the upgrade process.
 
 - [ ]  Implement the fork process.
+
+- [ ]  Implement the minion process.
 
 - [ ]  Implement the random process.
 
