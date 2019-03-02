@@ -26,16 +26,20 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   2
+#define MAX_COMMANDS   4
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
 void help_command( args *arguments );
 void wait_command( args *arguments );
+void bash_command( args *arguments );
+void redo_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
-   { "help",    "Get help about available system commands.", help_command, 1, 0 },
-   { "wait",    "Wait, skip a turn.", wait_command, 1, 1 },
+   { "help", "Get help about available system commands.", help_command, 1, 0 },
+   { "wait", "Wait, skip a turn.", wait_command, 1, 1 },
+   { "bash", "Bash a process (by pid) for 1-3 damage.", bash_command, 1, 1 },
+   { "!",    "Redo last command.", redo_command, 1, 1 },
 };
 
 int system_command( args *arguments )
@@ -116,7 +120,53 @@ void help_command( args *arguments )
    return;
 }
 
+
 void wait_command( args *arguments )
 {
    return;
 }
+
+
+void bash_command( args *arguments )
+{
+   process_t *proc;
+
+   if ( arguments->num_args < 2 ) 
+   {
+      add_message( "Usage is bash <pid>" );
+   }
+   else
+   {
+      proc = find_process_by_pid( atoi( arguments->args[ 1 ] ) );
+      if ( proc == (process_t *)0 )
+      {
+         add_message( "Pid not found." );
+      }
+      else
+      {
+         char line[80];
+         if ( hit( getPlayerAttack( ), proc->stats.defense ) )
+         {
+            int  damage = 1 + getRand( 3 );
+            damageProcess( proc, damage );
+            sprintf( line, "Process %04d hit for %d", proc->pid, damage );
+         }
+         else
+         {
+            sprintf( line, "Process %04d defends.", proc->pid );
+         }
+         add_chat_message( line );
+      }
+   }
+
+   return;
+}
+
+
+void redo_command( args *arguments )
+{
+   // This command is implemented at a higher level and therefore
+   // won't be called here.
+   return;
+}
+

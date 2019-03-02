@@ -26,6 +26,11 @@ void create_player( void )
    return;
 }
 
+process_t *GetPlayer( void )
+{
+   return &ulogin;
+}
+
 process_t *create_process( process_type_t type, int level )
 {
    process_t *process = calloc( 1, sizeof( process_t ) );
@@ -137,12 +142,13 @@ int getPlayerAttack( void )
    return ulogin.stats.attack;
 }
 
-void damagePlayer( int damage )
+void damageProcess( process_t *process, int damage )
 {
-   ulogin.stats.energy -= damage;
-   if ( ulogin.stats.energy <= 0 )
+   process->stats.energy -= damage;
+   if ( process->stats.energy <= 0 )
    {
-      ulogin.stats.energy = 0;
+      process->stats.energy = 0;
+      process->attributes.active = 0;
    }
    return;
 }

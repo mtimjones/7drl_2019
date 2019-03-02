@@ -41,6 +41,8 @@ void display_network_processes( WINDOW *win )
 
    display_player( win, line );
 
+   mvwprintw( win, line+1, 4, "                                                " );
+
    return;
 }
 

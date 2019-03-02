@@ -415,6 +415,8 @@ or a path from entry to exit nodes.
 
 - [x]  Implement player damage.
 
+- [ ]  Implement the ! command to redo last command.
+
 - [ ]  Implement the basic game loop.
 
 - [ ]  Implement the bash command.

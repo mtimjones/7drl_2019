@@ -10,7 +10,7 @@ void daemon_behavior( process_t *process )
       int damage = process->stats.base_damage + getRand( process->stats.ext_damage );
       sprintf( line, "[%04d] Daemon hits for %d.", process->pid, damage );
       add_chat_message( line );
-      damagePlayer( damage );
+      damageProcess( GetPlayer( ), damage );
    }
 
    return;
