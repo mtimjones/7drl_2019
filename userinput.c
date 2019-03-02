@@ -6,6 +6,7 @@
 
 static char user_line[ MAX_LINE ];
 static int cur_char;
+static char last_line[ MAX_LINE ] = { 0 };
 
 void init_user_input( void )
 {
@@ -13,6 +14,24 @@ void init_user_input( void )
    user_line[ cur_char++ ] = '$';
    user_line[ cur_char++ ] = ' ';
    user_line[ cur_char ] = 0;
+}
+
+void invoke_user_command( void )
+{
+   int take_turn;
+
+   add_message( user_line );
+
+   take_turn = system_exec( &user_line[ 2 ] );
+
+   init_user_input( );
+
+   if ( take_turn )
+   {
+      execute_network( );
+   }
+
+   return;
 }
 
 void handle_user_input( void )
@@ -24,15 +43,16 @@ void handle_user_input( void )
    }
    else if ( c == 0x0d )
    {
-      int take_turn;
-
-      add_message( user_line );
-      take_turn = system_exec( &user_line[ 2 ] );
-      init_user_input( );
-      if ( take_turn )
+      if ( user_line[2] == '.' )
       {
-         execute_network( );
+         strcpy( user_line, last_line );
       }
+      else
+      {
+         strcpy( last_line, user_line );
+      }
+
+      invoke_user_command( );
    }
    else if ( isprint( c ) )
    {
@@ -50,6 +70,7 @@ void handle_user_input( void )
       }
    }
 
+   return;
 }
 
 char *get_user_input_line( void )

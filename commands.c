@@ -39,7 +39,7 @@ commands command_list[ MAX_COMMANDS ] = {
    { "help", "Get help about available system commands.", help_command, 1, 0 },
    { "wait", "Wait, skip a turn.", wait_command, 1, 1 },
    { "bash", "Bash a process (by pid) for 1-3 damage.", bash_command, 1, 1 },
-   { "!",    "Redo last command.", redo_command, 1, 1 },
+   { ".",    "Redo last command.", redo_command, 1, 1 },
 };
 
 int system_command( args *arguments )
