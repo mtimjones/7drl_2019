@@ -33,7 +33,7 @@ typedef struct attributes_t
 
 typedef struct process_s process_t;
 
-typedef void ( *process_func_t )( process_t * );
+typedef void ( process_func_t )( process_t * );
 
 #define MAX_NAME   20
 

@@ -1,7 +1,6 @@
 #include <ncurses.h>
 #include <assert.h>
 #include "headers.h"
-#include "process.h"
 
 WINDOW *processwin;
 WINDOW *networkwin;

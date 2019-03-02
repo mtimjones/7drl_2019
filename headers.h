@@ -6,6 +6,10 @@
 #include <string.h>
 #include <ncurses.h>
 
+#include "process.h"
+#include "network.h"
+#include "behaviors.h"
+
 // Size of the UI
 #define ULINES      ( 15 )
 #define LLINES      ( 22 )

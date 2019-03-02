@@ -1,9 +1,9 @@
+#include <stdio.h>
 #include "headers.h"
-#include "network.h"
 
 unsigned int GameRunning = 1;
 unsigned int GameTime = 0;
-int          Level = 6;
+int          Level = 1;
 
 int main( int argc, char *argv[] )
 {

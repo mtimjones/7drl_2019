@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include <assert.h>
-#include "network.h"
 #include "headers.h"
 
 node_t *cur_node;

@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <headers.h>
-#include "process.h"
+#include "headers.h"
 
 process_t ulogin;
 
@@ -45,6 +44,7 @@ process_t *create_process( process_type_t type, int level )
          process->stats.defense = level;
          process->stats.energy = 10+getRand((level*4));
          process->action_rate = getRand(2)+1;
+         process->function = &daemon_behavior;
          break;
 
       default:
