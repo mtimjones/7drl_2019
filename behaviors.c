@@ -7,8 +7,10 @@ void daemon_behavior( process_t *process )
 
    if ( !i )
    {
-      add_chat_message( "Daemon says hi." );
-      i = 1;
+      char line[80];
+      sprintf( line, "[%04d] Daemon says hi.", process->pid );
+      add_chat_message( line );
+//      i = 1;
    }
 
    return;

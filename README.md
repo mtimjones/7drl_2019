@@ -399,17 +399,21 @@ or a path from entry to exit nodes.
 
 # Task List
 
-- [x]  Add UI (ncurses-based). (Reused)
+- [x]  Implement the UI (ncurses-based). (Reused)
 
-- [x]  Add player input. (Reused)
+- [x]  Implement the player input. (Reused)
 
-- [x]  Add process definitions, including callbacks.
+- [x]  Implement the process definitions, including callbacks.
 
-- [ ]  Add network generation and display.
+- [ ]  Implement the network generation and display.
 
-- [x]  Add chat window.
+- [x]  Implement the chat window.
 
 - [x]  Add process window and display.
+
+- [x]  Implement the process invocation (based upon action rate).
+
+- [ ]  Implement the basic game loop.
 
 - [ ]  Implement the bash command.
 
@@ -464,8 +468,6 @@ or a path from entry to exit nodes.
 - [ ]  Implement the random process.
 
 - [ ]  Implement the Executive process.
-
-- [ ]  Implement the basic game loop.
 
 - [ ]  Implement the death process and the morgue.
 

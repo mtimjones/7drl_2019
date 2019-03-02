@@ -57,4 +57,4 @@ void display_network_processes( WINDOW *window );
 void display_player( WINDOW *window, int line );
 void display_process( WINDOW *window, int line, process_t *process );
 int  is_process_active( process_t *process );
-
+void execute_process( process_t *process );

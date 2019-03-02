@@ -94,3 +94,13 @@ void create_network( int level )
    return;
 }
 
+
+void execute_network( void )
+{
+   for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
+   {
+      execute_process( cur_node->processes[ index ] );
+   }
+
+   return;
+}

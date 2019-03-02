@@ -43,7 +43,7 @@ process_t *create_process( process_type_t type, int level )
          process->stats.attack = level;
          process->stats.defense = level;
          process->stats.energy = 10+getRand((level*4));
-         process->action_rate = getRand(2)+1;
+         process->action_rate = getRand(3)+1;
          process->function = &daemon_behavior;
          break;
 
@@ -102,5 +102,18 @@ int is_process_active( process_t *process )
    }
 
    return 0;
+}
+
+
+void execute_process( process_t *process )
+{
+   if ( is_process_active( process ) )
+   {
+      if ( ++process->state_value >= process->action_rate )
+      {
+         process->state_value = 0;
+         ( process->function )( process );
+      }
+   }
 }
 

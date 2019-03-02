@@ -27,6 +27,7 @@ void handle_user_input( void )
       add_message( user_line );
       system_exec( &user_line[ 2 ] );
       init_user_input( );
+      execute_network( );
    }
    else if ( isprint( c ) )
    {
