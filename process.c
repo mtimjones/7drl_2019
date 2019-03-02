@@ -142,8 +142,13 @@ void damagePlayer( int damage )
    ulogin.stats.energy -= damage;
    if ( ulogin.stats.energy <= 0 )
    {
-      add_chat_message( "You have died." );
       ulogin.stats.energy = 0;
    }
    return;
 }
+
+int isPlayerDead( void )
+{
+   return ( ulogin.stats.energy == 0 );
+}
+

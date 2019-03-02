@@ -64,4 +64,5 @@ int  hit( int attack, int defense );
 int  getPlayerDefense( void );
 int  getPlayerAttack( void );
 void damagePlayer( int damage );
+int  isPlayerDead( void );
 

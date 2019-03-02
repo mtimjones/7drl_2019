@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include "headers.h"
 
 unsigned int GameRunning = 1;
@@ -45,6 +46,15 @@ int main( int argc, char *argv[] )
 
       // Update the window
       win_update( );
+
+      if ( isPlayerDead( ) )
+      {
+         add_chat_message( "You have died." );
+         win_update( );
+         // AddToMorgue( );
+         sleep( 5 );
+         break;
+      }
 
       while ( getTimestamp( ) < start + MS_PER_FRAME );
 
