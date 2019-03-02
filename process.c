@@ -45,7 +45,7 @@ process_t *create_process( process_type_t type, int level )
          process->stats.energy = 10+getRand((level*4));
          process->action_rate = getRand(3)+1;
          process->function = &daemon_behavior;
-         process->stats.base_damage = 3;
+         process->stats.base_damage = level;
          process->stats.ext_damage = (level*2);
          break;
 
@@ -137,3 +137,13 @@ int getPlayerAttack( void )
    return ulogin.stats.attack;
 }
 
+void damagePlayer( int damage )
+{
+   ulogin.stats.energy -= damage;
+   if ( ulogin.stats.energy <= 0 )
+   {
+      add_chat_message( "You have died." );
+      ulogin.stats.energy = 0;
+   }
+   return;
+}

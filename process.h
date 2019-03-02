@@ -63,4 +63,5 @@ void execute_process( process_t *process );
 int  hit( int attack, int defense );
 int  getPlayerDefense( void );
 int  getPlayerAttack( void );
+void damagePlayer( int damage );
 

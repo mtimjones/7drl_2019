@@ -413,6 +413,8 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the process invocation (based upon action rate).
 
+- [x]  Implement player damage.
+
 - [ ]  Implement the basic game loop.
 
 - [ ]  Implement the bash command.
