@@ -42,8 +42,6 @@ int main( int argc, char *argv[] )
 
       handle_user_input( );
 
-      // blinky lights.
-
       // Update the window
       win_update( );
 

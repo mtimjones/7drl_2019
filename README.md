@@ -415,9 +415,9 @@ or a path from entry to exit nodes.
 
 - [x]  Implement player damage.
 
-- [ ]  Implement the ! command to redo last command.
+- [x]  Implement the '.' command to redo last command.
 
-- [ ]  Implement the basic game loop.
+- [x]  Implement the basic game loop.
 
 - [ ]  Implement the bash command.
 
@@ -433,7 +433,7 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the wait command.
 
-- [ ]  Implement the bash command.
+- [x]  Implement the bash command.
 
 - [ ]  Implement the hack command and the QTE system.
 

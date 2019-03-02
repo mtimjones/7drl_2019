@@ -18,7 +18,7 @@ void create_player( void )
 
    ulogin.stats.attack = 2;
    ulogin.stats.defense = 2;
-   ulogin.stats.energy = 15;
+   ulogin.stats.energy = 20;
    ulogin.stats.level = 1;
 
    ulogin.action_rate = 1;
@@ -149,6 +149,9 @@ void damageProcess( process_t *process, int damage )
    {
       process->stats.energy = 0;
       process->attributes.active = 0;
+      char line[ 80 ];
+      sprintf( line, "[%04d] Process has exited.", process->pid );
+      add_message( line );
    }
    return;
 }
