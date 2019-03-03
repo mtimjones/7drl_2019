@@ -4,6 +4,27 @@
 #include <assert.h>
 #include "headers.h"
 
+#define NETROWS    6
+#define NETCOLS    3
+
+typedef struct
+{
+   int row;
+   int col;
+} loc_t;
+
+loc_t locations[ NETROWS ][ NETCOLS ] = {
+   { {  2,  4 }, {  2, 18 }, {  2, 32 } },
+   { {  4,  4 }, {  4, 18 }, {  4, 32 } },
+   { {  6,  4 }, {  6, 18 }, {  6, 32 } },
+   { {  8,  4 }, {  8, 18 }, {  8, 32 } },
+   { { 10,  4 }, { 10, 18 }, { 10, 32 } },
+   { { 12,  4 }, { 12, 18 }, { 12, 32 } },
+};
+
+// Display location for nodes in the network window.
+int 
+
 // Template bitfiels
 //
 //   bit 0 - north connection
@@ -23,9 +44,6 @@
 #define SPECIAL  64
 
 #define MAX_TEMPLATES    6
-
-#define NETROWS    6
-#define NETCOLS    3
 
 const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
    {
@@ -80,6 +98,24 @@ int cur_template = 0;
 
 void display_network( WINDOW *win )
 {
+   for ( int rows = 0 ; rows < NETROWS ; rows++ )
+   {
+      for ( int cols = 0 ; cols < NETROWS ; cols++ )
+      {
+         if ( network[ rows ][ cols ] )
+         {
+            if ( network[ rows ][ cols ]->visible )
+            {
+               mvwprintw( win, 
+                           locations[ rows ][ cols ].row,
+                           locations[ rows ][ cols ].col,
+                           network[ rows ][ cols ]->ip_adrs );
+            }
+         }
+      }
+   }
+
+#if 0
    // Temp
    mvwprintw( win,  2, 4, "[xx.xx.xx.xx]                            " );
    mvwprintw( win,  3, 4, "      |                                  " );
@@ -93,7 +129,7 @@ void display_network( WINDOW *win )
    mvwprintw( win, 11, 4, "      |                                  " );
    mvwprintw( win, 12, 4, " xx.xx.xx.xx                             " );
    // Temwin
-
+#endif
 }
 
 // Called by screen to display the processes of cur_node;
