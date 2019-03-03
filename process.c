@@ -18,7 +18,7 @@ void create_player( void )
 
    ulogin.stats.attack = 2;
    ulogin.stats.defense = 2;
-   ulogin.stats.max_energy = ulogin.stats.energy = 20;
+   ulogin.stats.max_energy = ulogin.stats.energy = 10;
    ulogin.stats.level = 1;
 
    ulogin.action_rate = 1;

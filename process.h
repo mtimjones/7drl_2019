@@ -9,7 +9,8 @@ typedef enum {
    Fork,
    Minion,
    Random,
-   Executive
+   Executive,
+   Total
 } process_type_t;
 
 typedef struct stats_t

@@ -433,7 +433,7 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the wait command.
 
-- [ ]  Implement the hack command and the QTE system.
+- [x]  Implement the hack command and the QTE system.
 
 - [ ]  Implement the cut command.
 
