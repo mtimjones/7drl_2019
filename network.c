@@ -50,7 +50,8 @@ void create_network_processes( node_t *node, int level )
 {
    int i;
    const int proclimit[ 6 ] = { 1, 2, 3, 5, 7, 8 };
-   int limit = 2 + getRand( proclimit[ level-1 ] );
+//   int limit = 2 + getRand( proclimit[ level-1 ] );
+   int limit = 4 + getRand( proclimit[ level-1 ] );
 
    switch( level )
    {

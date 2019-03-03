@@ -423,7 +423,7 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the hack command.
 
-- [ ]  Tune the hack process.
+- [ ]  Tune the hack process (display arrows instead of UP DOWN, etc.).
 
 - [x]  Implement the conflict system.
 

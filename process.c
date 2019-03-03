@@ -18,7 +18,7 @@ void create_player( void )
 
    ulogin.stats.attack = 2;
    ulogin.stats.defense = 2;
-   ulogin.stats.max_energy = ulogin.stats.energy = 10;
+   ulogin.stats.max_energy = ulogin.stats.energy = 20;
    ulogin.stats.level = 1;
    ulogin.stats.xp = 0;
    ulogin.stats.xp_to_next_level = 20;
@@ -127,7 +127,7 @@ void execute_process( process_t *process )
 }
 
 
-int  hit( int attack, int defense )
+int hit( int attack, int defense )
 {
    return ( getSRand( ) < ( (float)attack / ( (float)attack + (float)defense ) ) );
 }
@@ -158,22 +158,34 @@ void damageProcess( process_t *process, int damage )
       // Add xp earned to the player.
       if ( process->process_type != User )
       {
-         ulogin.stats.xp += ( ( process->stats.attack * process->stats.defense ) );
+         ulogin.stats.xp += ( ( process->stats.attack + process->stats.defense ) );
          if ( ulogin.stats.xp >= ulogin.stats.xp_to_next_level )
          {
             ulogin.stats.xp_to_next_level = 
                ( int ) ( ( float ) ulogin.stats.xp_to_next_level * 1.7 );
 
-            ulogin.stats.attack++;
-            ulogin.stats.defense++;
-
             char line[ 80 ];
             sprintf( line, "[%d] Increased level.", ulogin.pid );
-            add_message( line );
+            add_chat_message( line );
+
+            ulogin.stats.max_energy *= 1.5;
+            ulogin.stats.energy = ulogin.stats.max_energy;
+
+            if ( getSRand( ) > 0.5 ) 
+            {
+               ulogin.stats.attack++;
+               add_chat_message( "Attack increased." );
+            }
+            else 
+            {
+               ulogin.stats.defense++;
+               add_chat_message( "Defense increased." );
+            }
          }
       }
 
    }
+
    return;
 }
 
