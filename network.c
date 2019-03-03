@@ -91,8 +91,6 @@ const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
    }
 };
 
-node_t *cur_node;
-
 node_t *network[ NETROWS ][ NETCOLS ];
 
 int cur_template = 0;
@@ -133,16 +131,16 @@ void display_network( WINDOW *win )
 #endif
 }
 
-// Called by screen to display the processes of cur_node;
+// Called by screen to display the processes of current_node();
 void display_network_processes( WINDOW *win )
 {
    int line = 2;
 
    for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
    {
-      if ( is_process_active( cur_node->processes[ index ] ) )
+      if ( is_process_active( current_node()->processes[ index ] ) )
       {
-         display_process( win, line, cur_node->processes[ index ] );
+         display_process( win, line, current_node()->processes[ index ] );
          line++;
       }
    }
@@ -193,8 +191,8 @@ void create_network_processes( node_t *node, int level )
 
 void set_visible_nodes( void )
 {
-   int row = cur_node->row;
-   int col = cur_node->col;
+   int row = current_node()->row;
+   int col = current_node()->col;
 
    if ( templates[ cur_template ][ row ][ col ] & NOR )
    {
@@ -230,7 +228,7 @@ node_t *create_node( int level, unsigned short template, int row, int col )
 
    if ( template & ENTRY )
    {
-      cur_node = node;
+      init_node_stack( node );
       node->visible = node->visited = 1;
    }
 
@@ -268,7 +266,7 @@ void execute_network( void )
 {
    for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
    {
-      execute_process( cur_node->processes[ index ] );
+      execute_process( current_node()->processes[ index ] );
    }
 
    return;
@@ -281,11 +279,11 @@ process_t *find_process_by_pid( unsigned short pid )
 
    for ( int i = 0 ; i < MAX_PROCESSES_PER_NODE ; i++ )
    {
-      if ( is_process_active( cur_node->processes[ i ] ) )
+      if ( is_process_active( current_node()->processes[ i ] ) )
       {
-         if ( cur_node->processes[ i ]->pid == pid )
+         if ( current_node()->processes[ i ]->pid == pid )
          {
-            proc = cur_node->processes[ i ];
+            proc = current_node()->processes[ i ];
             break;
          }
       }
@@ -298,15 +296,16 @@ process_t *find_process_by_pid( unsigned short pid )
 int connect_to_ip_address_from_node ( char *ip_adrs )
 {
    // Brute force, but this should work...
-   int row = cur_node->row;
-   int col = cur_node->col;
+   int row = current_node()->row;
+   int col = current_node()->col;
    int ret = 0;
 
    if ( templates[ cur_template ][ row ][ col ] & NOR )
    {
       if ( !strncmp( network[ row-1 ][ col ]->ip_adrs, ip_adrs, 11 ) )
       {
-         cur_node = network[ row-1 ][ col ];
+         push_node( current_node() );
+         set_current_node( network[ row-1 ][ col ] );
          ret = 1;
       }
    }
@@ -315,7 +314,8 @@ int connect_to_ip_address_from_node ( char *ip_adrs )
    {
       if ( !strncmp( network[ row+1 ][ col ]->ip_adrs, ip_adrs, 11 ) )
       {
-         cur_node = network[ row+1 ][ col ];
+         push_node( current_node() );
+         set_current_node( network[ row+1 ][ col ] );
          ret = 1;
       }
    }
@@ -324,7 +324,8 @@ int connect_to_ip_address_from_node ( char *ip_adrs )
    {
       if ( !strncmp( network[ row ][ col-1 ]->ip_adrs, ip_adrs, 11 ) )
       {
-         cur_node = network[ row ][ col-1 ];
+         push_node( current_node() );
+         set_current_node( network[ row ][ col-1 ] );
          ret = 1;
       }
    }
@@ -333,14 +334,15 @@ int connect_to_ip_address_from_node ( char *ip_adrs )
    {
       if ( !strncmp( network[ row ][ col+1 ]->ip_adrs, ip_adrs, 11 ) )
       {
-         cur_node = network[ row ][ col+1 ];
+         push_node( current_node() );
+         set_current_node( network[ row ][ col+1 ] );
          ret = 1;
       }
    }
 
    if ( ret )
    {
-      cur_node->visited = cur_node->visible = 1;
+      current_node()->visited = current_node()->visible = 1;
       set_visible_nodes( );
    }
 

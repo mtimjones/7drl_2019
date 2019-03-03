@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS = -std=c99 -I. -std=c99 -g
 
 DEPS = headers.h 
-OBJS = main.o messages.o screen.o time.o userinput.o process.o commands.c network.o behaviors.o
+OBJS = main.o messages.o screen.o time.o userinput.o process.o commands.c network.o behaviors.o sysstack.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

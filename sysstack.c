@@ -1,37 +1,45 @@
 #include "headers.h"
 
-static system_stack_t system_stack;
+#define MAX_NODE_STACK_DEPTH   128
 
-static int cur_system;
-
-void init_system( int system )
+typedef struct
 {
-   system_stack.top_index = 0;
-   cur_system = 0;
+   node_t *entry[ MAX_NODE_STACK_DEPTH ];
+   int top_index;
+} node_stack_t;
+
+static node_t *cur_node;
+
+static node_stack_t node_stack;
+
+void init_node_stack( node_t *node )
+{
+   node_stack.top_index = 0;
+   cur_node = node;
 }
 
-int current_system( void )
+node_t *current_node( void )
 {
-   return cur_system;
+   return cur_node;
 }
 
-int system_stack_empty( void )
+int node_stack_empty( void )
 {
-   return ( system_stack.top_index == 0 );
+   return ( node_stack.top_index == 0 );
 }
 
-void set_current_system( int system )
+void set_current_node( node_t *node )
 {
-   cur_system = system;
+   cur_node = node;
 }
 
-void push_system( int system )
+void push_node( node_t *node )
 {
-   system_stack.entry[ system_stack.top_index++ ] = system;
+   node_stack.entry[ node_stack.top_index++ ] = node;
 }
 
-int pop_system( void )
+node_t *pop_node( void )
 {
-   return system_stack.entry[ --system_stack.top_index ];
+   return node_stack.entry[ --node_stack.top_index ];
 }
 

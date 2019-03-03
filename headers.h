@@ -61,15 +61,15 @@ void create_process_from_file( int pindex, int findex, unsigned int arg );
 int  find_system( char *ip_address );
 void move_file( int to, int from, char *file );
 int  can_execute( void );
-
-// System stack API
-void init_system( int system );
-int  current_system( void );
-int  system_stack_empty( void );
-void set_current_system( int system );
-void push_system( int system );
-int  pop_system( void );
 #endif
+
+// Node stack API
+void    init_node_stack( node_t *node );
+node_t *current_node( void );
+int     node_stack_empty( void );
+void    set_current_node( node_t *node );
+void    push_node( node_t *node );
+node_t *pop_node( void );
 
 // RNG Functions 
 #define getSRand()      ( ( float ) rand( ) / ( float ) RAND_MAX )
