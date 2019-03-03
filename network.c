@@ -55,11 +55,12 @@ const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
       { NOR | EXIT | SPECIAL,                     0,               0 },
    },
    {
-      { 0, 1, 0 },
-      { 1, 1, 1 },
-      { 1, 1, 1 },
-      { 1, 1, 1 },
-      { 0, 1, 0 },
+      {                    0, SOU | ENTRY          ,              0 },
+      { SOU | EAS           , WES | EAS | NOR      , WES | SOU      },
+      { EAS | NOR           , WES | SOU            , WES | NOR      },
+      { EAS | SOU           , WES | NOR | EAS      , WES | SOU      },
+      { EAS | NOR           , WES | SOU | EAS      , WES | NOR      },
+      {                    0, NOR | EXIT | SPECIAL ,              0 },
    },
    {
       { 0, 0, 1 },
@@ -93,7 +94,7 @@ const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
 
 node_t *network[ NETROWS ][ NETCOLS ];
 
-int cur_template = 0;
+int cur_template = 1;
 
 void display_network( WINDOW *win )
 {
