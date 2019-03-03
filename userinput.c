@@ -126,7 +126,7 @@ void handle_user_input( void )
             if ( ++hack.cur_seq == hack.seq_length )
             {
                add_chat_message( "Hack success." );
-               healPlayer( hack.target->stats.energy );
+               healPlayer( getRand( hack.target->stats.max_energy ) );
                hack.target->attributes.active = 0;
                mode = NORMAL;
                return;
