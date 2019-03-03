@@ -32,4 +32,5 @@ void create_network( int level );
 void execute_network( void );
 process_t *find_process_by_pid( unsigned short pid );
 
+int connect_to_ip_address_from_node( char *ip_adrs );
 

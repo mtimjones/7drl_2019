@@ -26,7 +26,7 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   5
+#define MAX_COMMANDS   6
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
@@ -35,13 +35,15 @@ void wait_command( args *arguments );
 void bash_command( args *arguments );
 void redo_command( args *arguments );
 void hack_command( args *arguments );
+void connect_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
-   { "help", "Get help about available system commands.",  help_command, 1, 0 },
-   { ".",    "Redo last command.",                         redo_command, 1, 1 },
-   { "wait", "Wait, skip a turn.",                         wait_command, 1, 1 },
-   { "bash", "Bash a process (by pid) for 1-3 damage.",    bash_command, 1, 1 },
-   { "hack", "Hack a process with arrow keys for energy.", hack_command, 1, 0 },
+   { "help",    "Get help about available system commands.",  help_command,    1, 0 },
+   { ".",       "Redo last command.",                         redo_command,    1, 1 },
+   { "wait",    "Wait, skip a turn.",                         wait_command,    1, 1 },
+   { "bash",    "Bash a process (by pid) for 1-3 damage.",    bash_command,    1, 1 },
+   { "hack",    "Hack a process with arrow keys for energy.", hack_command,    1, 0 },
+   { "connect", "Connect to a node by its IP address.",       connect_command, 1, 0 },
 };
 
 int system_command( args *arguments )
@@ -151,11 +153,11 @@ void bash_command( args *arguments )
          {
             int  damage = 1 + getRand( 3 );
             damageProcess( proc, damage );
-            sprintf( line, "Process %04d hit for %d", proc->pid, damage );
+            sprintf( line, "[%04d] hit for %d energy", proc->pid, damage );
          }
          else
          {
-            sprintf( line, "Process %04d defends.", proc->pid );
+            sprintf( line, "[%04d] process defends.", proc->pid );
          }
          add_chat_message( line );
       }
@@ -209,4 +211,31 @@ void hack_command( args *arguments )
    return;
 }
 
+
+void connect_command( args *arguments )
+{
+   int ret;
+   char line[ 80 ];
+
+   if ( arguments->num_args < 2 ) 
+   {
+      add_message( "Usage is connect <ip_adress>" );
+   }
+   else
+   {
+      ret = connect_to_ip_address_from_node( arguments->args[ 1 ] );
+
+      if ( ret )
+      {
+         sprintf( line, "Connected to %s", arguments->args[ 1] );
+      }
+      else
+      {
+         sprintf( line, "Unable to access %s", arguments->args[ 1] );
+      }
+      add_message( line );
+   }
+
+   return;
+}
 

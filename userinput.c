@@ -32,7 +32,7 @@ void init_hack( int len, int time, process_t *process )
    char line[ 80 ] = { 0 };
    char *names[4] = { "DOWN ", "UP ", "LEFT ", "RIGHT " };
 
-   strcat( line, "Hack Sequence: " );
+   strcat( line, "Hack: " );
 
    for ( int i = 0 ; i < len ; i++ )
    {
@@ -40,7 +40,7 @@ void init_hack( int len, int time, process_t *process )
       strcat( line, names[ hack.sequence[ i ] ] );
    }
 
-   add_chat_message( line );
+   add_message( line );
 
    hack.seq_length = len;
    hack.cur_seq    = 0;

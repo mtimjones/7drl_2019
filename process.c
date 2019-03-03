@@ -184,7 +184,7 @@ void damageProcess( process_t *process, int damage )
             sprintf( line, "[%d] Increased level.", ulogin.pid );
             add_chat_message( line );
 
-            ulogin.stats.max_energy *= 1.5;
+            ulogin.stats.max_energy *= 1.2;
             ulogin.stats.energy = ulogin.stats.max_energy;
 
             if ( getSRand( ) > 0.5 ) 

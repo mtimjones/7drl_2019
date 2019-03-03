@@ -45,13 +45,14 @@ int
 
 #define MAX_TEMPLATES    6
 
+
 const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
    {
       { SOU | ENTRY         ,                     0,               0 },
       { NOR | SOU | EAS     , EAS | WES | SOU      ,       WES | SOU },
       { NOR | SOU | EAS     , NOR | SOU | EAS | WES, NOR | SOU | WES },
       { NOR | SOU | EAS     , NOR | EAS | WES      ,       NOR | WES },
-      { NOR | SPECIAL | EXIT,                     0,               0 },
+      { NOR | EXIT | SPECIAL,                     0,               0 },
    },
    {
       { 0, 1, 0 },
@@ -144,7 +145,6 @@ void display_network_processes( WINDOW *win )
          display_process( win, line, cur_node->processes[ index ] );
          line++;
       }
-
    }
 
    display_player( win, line );
@@ -216,15 +216,15 @@ void set_visible_nodes( void )
    return;
 }
 
-
 node_t *create_node( int level, unsigned short template, int row, int col )
 {
    node_t *node = calloc( 1, sizeof( node_t ) );
 
    snprintf( node->ip_adrs, MAX_IP_ADRS, "%2d.%2d.%2d.%2d", 
-               level+1, getRand(99), getRand(99), getRand(98)+1 );
+               level+10, getRand(89)+10, getRand(89)+10, getRand(88)+10 );
 
    // Initialize the node.
+   node->row = row; node->col = col;
 
    create_network_processes( node, level );
 
@@ -232,7 +232,6 @@ node_t *create_node( int level, unsigned short template, int row, int col )
    {
       cur_node = node;
       node->visible = node->visited = 1;
-      node->row = row; node->col = col;
    }
 
    return node;
@@ -293,5 +292,58 @@ process_t *find_process_by_pid( unsigned short pid )
    }
 
    return proc;
+}
+
+
+int connect_to_ip_address_from_node ( char *ip_adrs )
+{
+   // Brute force, but this should work...
+   int row = cur_node->row;
+   int col = cur_node->col;
+   int ret = 0;
+
+   if ( templates[ cur_template ][ row ][ col ] & NOR )
+   {
+      if ( !strncmp( network[ row-1 ][ col ]->ip_adrs, ip_adrs, 11 ) )
+      {
+         cur_node = network[ row-1 ][ col ];
+         ret = 1;
+      }
+   }
+
+   if ( templates[ cur_template ][ row ][ col ] & SOU )
+   {
+      if ( !strncmp( network[ row+1 ][ col ]->ip_adrs, ip_adrs, 11 ) )
+      {
+         cur_node = network[ row+1 ][ col ];
+         ret = 1;
+      }
+   }
+
+   if ( templates[ cur_template ][ row ][ col ] & WES )
+   {
+      if ( !strncmp( network[ row ][ col-1 ]->ip_adrs, ip_adrs, 11 ) )
+      {
+         cur_node = network[ row ][ col-1 ];
+         ret = 1;
+      }
+   }
+
+   if ( templates[ cur_template ][ row ][ col ] & EAS )
+   {
+      if ( !strncmp( network[ row ][ col+1 ]->ip_adrs, ip_adrs, 11 ) )
+      {
+         cur_node = network[ row ][ col+1 ];
+         ret = 1;
+      }
+   }
+
+   if ( ret )
+   {
+      cur_node->visited = cur_node->visible = 1;
+      set_visible_nodes( );
+   }
+
+   return ret;
 }
 
