@@ -37,11 +37,11 @@ void redo_command( args *arguments );
 void hack_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
-   { "help", "Get help about available system commands.", help_command, 1, 0 },
-   { ".",    "Redo last command.",                        redo_command, 1, 1 },
-   { "wait", "Wait, skip a turn.",                        wait_command, 1, 1 },
-   { "bash", "Bash a process (by pid) for 1-3 damage.",   bash_command, 1, 1 },
-   { "hack", "Hack a process to gain energy.",            hack_command, 1, 1 },
+   { "help", "Get help about available system commands.",  help_command, 1, 0 },
+   { ".",    "Redo last command.",                         redo_command, 1, 1 },
+   { "wait", "Wait, skip a turn.",                         wait_command, 1, 1 },
+   { "bash", "Bash a process (by pid) for 1-3 damage.",    bash_command, 1, 1 },
+   { "hack", "Hack a process with arrow keys for energy.", hack_command, 1, 0 },
 };
 
 int system_command( args *arguments )
@@ -201,7 +201,7 @@ void hack_command( args *arguments )
 
             // @TODO: Need to escalate time with limit.
 
-            init_hack( limit, 100, proc );
+            init_hack( limit, 200, proc );
          }
       }
    }

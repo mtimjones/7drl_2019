@@ -17,6 +17,7 @@ typedef struct stats_t
    int attack;
    int defense;
    int energy;
+   int max_energy;
    int level;
    int base_damage;
    int ext_damage;
@@ -66,4 +67,5 @@ int  getPlayerAttack( void );
 void damageProcess( process_t *process, int damage );
 int  isPlayerDead( void );
 process_t *GetPlayer( void );
+void healPlayer( int energy );
 

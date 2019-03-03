@@ -421,9 +421,11 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the bash command.
 
-- [ ]  Implement the hack command.
+- [x]  Implement the hack command.
 
-- [ ]  Implement the conflict system.
+- [ ]  Tune the hack process.
+
+- [x]  Implement the conflict system.
 
 - [ ]  Implement the experience and level system.
 

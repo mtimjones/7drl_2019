@@ -18,7 +18,7 @@ void create_player( void )
 
    ulogin.stats.attack = 2;
    ulogin.stats.defense = 2;
-   ulogin.stats.energy = 20;
+   ulogin.stats.max_energy = ulogin.stats.energy = 20;
    ulogin.stats.level = 1;
 
    ulogin.action_rate = 1;
@@ -154,6 +154,15 @@ void damageProcess( process_t *process, int damage )
       add_message( line );
    }
    return;
+}
+
+void healPlayer( int energy )
+{
+   ulogin.stats.energy += energy;
+   if ( ulogin.stats.energy > ulogin.stats.max_energy )
+   {
+      ulogin.stats.energy = ulogin.stats.max_energy;
+   }
 }
 
 int isPlayerDead( void )

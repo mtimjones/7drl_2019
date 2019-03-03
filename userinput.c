@@ -11,10 +11,10 @@ static char last_line[ MAX_LINE ] = { 0 };
 #define NORMAL    0
 #define HACK      1
 
-#define UP        0 // 1B 58 42
-#define DOWN      1 // 1B 5B 44
-#define LEFT      2 // 1B 5B 43
-#define RIGHT     3 // 1B 5B 41
+#define DOWN      0
+#define UP        1
+#define LEFT      2
+#define RIGHT     3
 
 static int mode = NORMAL;
 
@@ -29,13 +29,18 @@ struct hackstruct
 
 void init_hack( int len, int time, process_t *process )
 {
+   char line[ 80 ] = { 0 };
+   char *names[4] = { "DOWN ", "UP ", "LEFT ", "RIGHT " };
+
+   strcat( line, "Hack Sequence: " );
+
    for ( int i = 0 ; i < len ; i++ )
    {
-      hack.sequence[ i ] = 0x30 + getRand(4);
-   hack.sequence[ i + 1 ] = 0;
+      hack.sequence[ i ] = getRand(4);
+      strcat( line, names[ hack.sequence[ i ] ] );
    }
 
-   add_chat_message( hack.sequence );
+   add_chat_message( line );
 
    hack.seq_length = len;
    hack.cur_seq    = 0;
@@ -115,12 +120,29 @@ void handle_user_input( void )
    {
       if ( c != 0 )
       {
-
+         c -= 0x102;
+         if ( c == hack.sequence[ hack.cur_seq ] )
+         {
+            if ( ++hack.cur_seq == hack.seq_length )
+            {
+               add_chat_message( "Hack success." );
+               healPlayer( hack.target->stats.energy );
+               hack.target->attributes.active = 0;
+               mode = NORMAL;
+               return;
+            }
+         }
+         else
+         {
+            add_chat_message( "Hack failed." );
+            mode = NORMAL;
+            hack.target->attributes.hackable = 0;
+         }
       }
       if ( --hack.timeleft == 0 )
       {
          // time has run out.
-         add_chat_message( "Hack failed." );
+         add_chat_message( "Hack timeout." );
          mode = NORMAL;
       }
    }
