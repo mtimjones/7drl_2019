@@ -26,7 +26,7 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   4
+#define MAX_COMMANDS   5
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
@@ -34,12 +34,14 @@ void help_command( args *arguments );
 void wait_command( args *arguments );
 void bash_command( args *arguments );
 void redo_command( args *arguments );
+void hack_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
    { "help", "Get help about available system commands.", help_command, 1, 0 },
-   { "wait", "Wait, skip a turn.", wait_command, 1, 1 },
-   { "bash", "Bash a process (by pid) for 1-3 damage.", bash_command, 1, 1 },
-   { ".",    "Redo last command.", redo_command, 1, 1 },
+   { ".",    "Redo last command.",                        redo_command, 1, 1 },
+   { "wait", "Wait, skip a turn.",                        wait_command, 1, 1 },
+   { "bash", "Bash a process (by pid) for 1-3 damage.",   bash_command, 1, 1 },
+   { "hack", "Hack a process to gain energy.",            hack_command, 1, 1 },
 };
 
 int system_command( args *arguments )
@@ -169,4 +171,42 @@ void redo_command( args *arguments )
    // won't be called here.
    return;
 }
+
+
+void hack_command( args *arguments )
+{
+   // disable hackable for the process.   
+   process_t *proc;
+
+   if ( arguments->num_args < 2 ) 
+   {
+      add_message( "Usage is bash <pid>" );
+   }
+   else
+   {
+      proc = find_process_by_pid( atoi( arguments->args[ 1 ] ) );
+      if ( proc == (process_t *)0 )
+      {
+         add_message( "Pid not found." );
+      }
+      else
+      {
+         if ( !proc->attributes.hackable )
+         {
+            add_message( "Process cannot be hacked." );
+         }
+         else
+         {
+            int limit = 2 + proc->stats.level;
+
+            // @TODO: Need to escalate time with limit.
+
+            init_hack( limit, 100, proc );
+         }
+      }
+   }
+
+   return;
+}
+
 

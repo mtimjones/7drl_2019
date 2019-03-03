@@ -47,6 +47,7 @@ void init_user_input( void );
 void handle_user_input( void );
 char *get_user_input_line( void );
 int system_exec( char *line );
+void init_hack( int len, int time, process_t *proc );
 
 #if 0
 // Helpers API
