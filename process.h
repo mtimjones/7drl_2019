@@ -2,6 +2,7 @@
 
 typedef enum {
    User = 0,
+   Worker,
    Daemon,
    Sentry,
    Encrypt,

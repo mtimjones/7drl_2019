@@ -47,13 +47,29 @@ process_t *create_process( process_type_t type, int level )
          process->attributes.active = 1;
          process->attributes.attack = 1;
          process->stats.level = level;
-         process->stats.attack = level;
+         process->stats.attack = level+1;
          process->stats.defense = level;
-         process->stats.energy = 10+getRand((level*4));
+         process->stats.energy = 10+getRand((level*2));
          process->action_rate = getRand(3)+1;
          process->function = &daemon_behavior;
          process->stats.base_damage = level;
-         process->stats.ext_damage = (level*2);
+         process->stats.ext_damage = level;
+         break;
+      case Worker:
+         strcpy( process->name, "worker" );
+         process->process_type = type;
+         process->pid = getRand( 9999 );
+         process->attributes.hackable = 1;
+         process->attributes.active = 1;
+         process->attributes.attack = 1;
+         process->stats.level = level;
+         process->stats.attack = level;
+         process->stats.defense = level+1;
+         process->stats.energy = 10+level;
+         process->action_rate = getRand(2)+1;
+         process->function = &daemon_behavior;
+         process->stats.base_damage = level;
+         process->stats.ext_damage = level;
          break;
 
       default:
