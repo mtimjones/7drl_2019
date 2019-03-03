@@ -22,6 +22,8 @@ typedef struct stats_t
    int level;
    int base_damage;
    int ext_damage;
+   int xp;
+   int xp_to_next_level;
 } stats_t;
 
 typedef struct attributes_t

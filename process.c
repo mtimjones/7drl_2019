@@ -20,6 +20,8 @@ void create_player( void )
    ulogin.stats.defense = 2;
    ulogin.stats.max_energy = ulogin.stats.energy = 10;
    ulogin.stats.level = 1;
+   ulogin.stats.xp = 0;
+   ulogin.stats.xp_to_next_level = 20;
 
    ulogin.action_rate = 1;
 
@@ -152,6 +154,25 @@ void damageProcess( process_t *process, int damage )
       char line[ 80 ];
       sprintf( line, "[%04d] Process has exited.", process->pid );
       add_message( line );
+
+      // Add xp earned to the player.
+      if ( process->process_type != User )
+      {
+         ulogin.stats.xp += ( ( process->stats.attack * process->stats.defense ) );
+         if ( ulogin.stats.xp >= ulogin.stats.xp_to_next_level )
+         {
+            ulogin.stats.xp_to_next_level = 
+               ( int ) ( ( float ) ulogin.stats.xp_to_next_level * 1.7 );
+
+            ulogin.stats.attack++;
+            ulogin.stats.defense++;
+
+            char line[ 80 ];
+            sprintf( line, "[%d] Increased level.", ulogin.pid );
+            add_message( line );
+         }
+      }
+
    }
    return;
 }
