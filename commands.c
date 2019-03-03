@@ -26,7 +26,7 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   6
+#define MAX_COMMANDS   8
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
@@ -36,14 +36,18 @@ void bash_command( args *arguments );
 void redo_command( args *arguments );
 void hack_command( args *arguments );
 void connect_command( args *arguments );
+void exit_command( args *arguments );
+void host_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
    { "help",    "Get help about available system commands.",  help_command,    1, 0 },
    { ".",       "Redo last command.",                         redo_command,    1, 1 },
+   { "host",    "Print information about the current host.",  host_command,    1, 0 },
+   { "connect", "Connect to a node by its IP address.",       connect_command, 1, 0 },
+   { "exit",    "Return to the previously connected system.", exit_command,    1, 0 },
    { "wait",    "Wait, skip a turn.",                         wait_command,    1, 1 },
    { "bash",    "Bash a process (by pid) for 1-3 damage.",    bash_command,    1, 1 },
    { "hack",    "Hack a process with arrow keys for energy.", hack_command,    1, 0 },
-   { "connect", "Connect to a node by its IP address.",       connect_command, 1, 0 },
 };
 
 int system_command( args *arguments )
@@ -235,6 +239,31 @@ void connect_command( args *arguments )
       }
       add_message( line );
    }
+
+   return;
+}
+
+
+void exit_command( args *arguments )
+{
+   if ( node_stack_empty( ) )
+   {
+      add_message( "Unable to exit current node." );
+   }
+
+   // Cannot exit system if special is there.
+   set_current_node( pop_node( ) );
+
+}
+
+
+void host_command( args *argument )
+{
+   node_t *node = current_node( );
+
+   // Need to emit a host line including some other info.
+
+   add_message( node->ip_adrs );
 
    return;
 }

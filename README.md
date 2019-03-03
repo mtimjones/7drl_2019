@@ -427,9 +427,11 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the conflict system.
 
-- [ ]  Implement the experience and level system.
+- [x]  Implement the experience and level system.
 
-- [ ]  Implement the connect command to traverse the network.
+- [x]  Implement the host command.
+
+- [x]  Implement the connect command to traverse the network.
 
 - [x]  Implement the wait command.
 
