@@ -56,7 +56,7 @@ process_t *create_process( process_type_t type, int level )
          process->stats.ext_damage = level;
          break;
       case Worker:
-         strcpy( process->name, "worker" );
+         strcpy( process->name, "kworker" );
          process->process_type = type;
          process->pid = getRand( 9999 );
          process->attributes.hackable = 1;

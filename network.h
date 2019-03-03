@@ -17,8 +17,9 @@ typedef void ( *node_function )( node_t *node );
 typedef struct node_s
 {
    unsigned int node_type; // Index to string that is emitted upon entering node.
+   int row;
+   int col;
    char ip_adrs[ MAX_IP_ADRS ];
-   node_t *connections[ 4 ];
    process_t *processes[ MAX_PROCESSES_PER_NODE ];
    unsigned int visited:1;
    unsigned int visible:1; // Auto set for entry node

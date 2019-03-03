@@ -4,7 +4,79 @@
 #include <assert.h>
 #include "headers.h"
 
+// Template bitfiels
+//
+//   bit 0 - north connection
+//   bit 1 - south connection
+//   bit 2 - east connection
+//   bit 3 - west connection
+//   bit 4 - entry node
+//   bit 5 - exit node
+//   bit 6 - special node
+
+#define NOR       1
+#define SOU       2
+#define EAS       4
+#define WES       8
+#define ENTRY    16
+#define EXIT     32
+#define SPECIAL  64
+
+#define MAX_TEMPLATES    6
+
+#define NETROWS    6
+#define NETCOLS    3
+
+const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
+   {
+      { SOU | ENTRY         ,                     0,               0 },
+      { NOR | SOU | EAS     , EAS | WES | SOU      ,       WES | SOU },
+      { NOR | SOU | EAS     , NOR | SOU | EAS | WES, NOR | SOU | WES },
+      { NOR | SOU | EAS     , NOR | EAS | WES      ,       NOR | WES },
+      { NOR | SPECIAL | EXIT,                     0,               0 },
+   },
+   {
+      { 0, 1, 0 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 0, 1, 0 },
+   },
+   {
+      { 0, 0, 1 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 0, 0, 1 },
+   },
+   {
+      { 1, 0, 0 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 0, 0, 1 },
+   },
+   {
+      { 0, 0, 1 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 1, 0, 0 },
+   },
+   {
+      { 0, 1, 0 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 1, 1, 1 },
+      { 0, 1, 0 },
+   }
+};
+
 node_t *cur_node;
+
+node_t *network[ NETROWS ][ NETCOLS ];
+
+int cur_template = 0;
 
 void display_network( WINDOW *win )
 {
@@ -83,22 +155,75 @@ void create_network_processes( node_t *node, int level )
 }
 
 
-node_t *create_node( int level )
+void set_visible_nodes( void )
 {
-   node_t *proc = calloc( 1, sizeof( node_t ) );
+   int row = cur_node->row;
+   int col = cur_node->col;
 
-   snprintf( proc->ip_adrs, MAX_IP_ADRS, "%2d.%2d.%2d.%2d", 
+   if ( templates[ cur_template ][ row ][ col ] & NOR )
+   {
+      network[ row-1 ][ col ]->visible = 1;
+   }
+   if ( templates[ cur_template ][ row ][ col ] & SOU )
+   {
+      network[ row+1 ][ col ]->visible = 1;
+   }
+   if ( templates[ cur_template ][ row ][ col ] & WES )
+   {
+      network[ row ][ col-1 ]->visible = 1;
+   }
+   if ( templates[ cur_template ][ row ][ col ] & EAS )
+   {
+      network[ row ][ col+1 ]->visible = 1;
+   }
+   
+   return;
+}
+
+
+node_t *create_node( int level, unsigned short template, int row, int col )
+{
+   node_t *node = calloc( 1, sizeof( node_t ) );
+
+   snprintf( node->ip_adrs, MAX_IP_ADRS, "%2d.%2d.%2d.%2d", 
                level+1, getRand(99), getRand(99), getRand(98)+1 );
 
-   create_network_processes( proc, level );
+   // Initialize the node.
 
-   return proc;
+   create_network_processes( node, level );
+
+   if ( template & ENTRY )
+   {
+      cur_node = node;
+      node->visible = node->visited = 1;
+      node->row = row; node->col = col;
+   }
+
+   return node;
 }
 
 
 void create_network( int level )
 {
-   cur_node = create_node( level );
+   // @todo: need to randomize cur_template.
+
+   int rows, cols;
+
+   for ( rows = 0 ; rows < NETROWS ; rows++ )
+   {
+      for ( cols = 0 ; cols < NETCOLS ; cols++ )
+      {
+         // Is a node to be placed here?
+         if ( templates[ cur_template ][ rows ][ cols ] )
+         {
+            network[ rows ][ cols ] = 
+               create_node( level, templates[ cur_template ][ rows ][ cols ],
+                            rows, cols );
+         }
+      }
+   }
+
+   set_visible_nodes( );
 
    return;
 }

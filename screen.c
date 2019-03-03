@@ -113,7 +113,6 @@ void win_update( void )
    wrefresh( consolewin );
    wrefresh( chatwin );
    
-
    return;
 }
 
