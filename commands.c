@@ -249,6 +249,7 @@ void exit_command( args *arguments )
    if ( node_stack_empty( ) )
    {
       add_message( "Unable to exit current node." );
+      return;
    }
 
    // Cannot exit system if special is there.

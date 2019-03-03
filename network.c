@@ -109,6 +109,30 @@ void display_network( WINDOW *win )
                            locations[ rows ][ cols ].row,
                            locations[ rows ][ cols ].col,
                            network[ rows ][ cols ]->ip_adrs );
+               if ( templates[ cur_template ][ rows ][ cols ] & NOR )
+               {
+                  mvwprintw( win,
+                           locations[ rows ][ cols ].row - 1,
+                           locations[ rows ][ cols ].col + 5, "|" );
+               }
+               if ( templates[ cur_template ][ rows ][ cols ] & SOU )
+               {
+                  mvwprintw( win,
+                           locations[ rows ][ cols ].row + 1,
+                           locations[ rows ][ cols ].col + 5, "|" );
+               }
+               if ( templates[ cur_template ][ rows ][ cols ] & EAS )
+               {
+                  mvwprintw( win,
+                           locations[ rows ][ cols ].row,
+                           locations[ rows ][ cols ].col + 12, "-" );
+               }
+               if ( templates[ cur_template ][ rows ][ cols ] & WES )
+               {
+                  mvwprintw( win,
+                           locations[ rows ][ cols ].row,
+                           locations[ rows ][ cols ].col - 2, "-" );
+               }
             }
          }
       }
