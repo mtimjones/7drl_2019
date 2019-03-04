@@ -414,7 +414,9 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the process definitions, including callbacks.
 
-- [ ]  Implement the network generation and display.
+- [x]  Implement the network generation and display.
+
+- [x]  Implement the cursor on the network window to show the current node.
 
 - [x]  Implement the chat window.
 
@@ -488,7 +490,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement a way for processes to communicate with the user (via chat).
 
-- [ ]  Implement network initialization via network templates.
+- [x]  Implement network initialization via network templates.
 
 - [ ]  Implement the end game (perhaps in the context of the Executive process).
 

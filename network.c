@@ -111,10 +111,13 @@ void display_network( WINDOW *win )
          {
             if ( network[ rows ][ cols ]->visible )
             {
+               if ( network[ rows ][ cols ] == current_node( ) ) wattron( win, A_BOLD );
                mvwprintw( win, 
                            locations[ rows ][ cols ].row,
                            locations[ rows ][ cols ].col,
                            network[ rows ][ cols ]->ip_adrs );
+               if ( network[ rows ][ cols ] == current_node( ) ) wattroff( win, A_BOLD );
+
                if ( templates[ cur_template ][ rows ][ cols ] & NOR )
                {
                   mvwprintw( win,
