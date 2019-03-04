@@ -99,7 +99,7 @@ const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
 
 node_t *network[ NETROWS ][ NETCOLS ];
 
-int cur_template = 5;
+int cur_template = 0;
 
 void display_network( WINDOW *win )
 {
@@ -268,9 +268,9 @@ node_t *create_node( int level, unsigned short template, int row, int col )
 
 void create_network( int level )
 {
-   // @todo: need to randomize cur_template.
-
    int rows, cols;
+
+   cur_template = getRand( 6 );
 
    for ( rows = 0 ; rows < NETROWS ; rows++ )
    {
