@@ -430,6 +430,8 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the basic game loop.
 
+- [ ]  Implement level completion and transition to the next level.
+
 - [x]  Implement the bash command.
 
 - [x]  Implement the hack command.
