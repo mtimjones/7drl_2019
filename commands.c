@@ -208,7 +208,7 @@ void hack_command( args *arguments )
             // @TODO: Need to escalate time with limit.
             proc->attributes.hackable = 0;
 
-            init_hack( limit, 200, proc );
+            init_hack( limit, 400, proc );
          }
       }
    }
