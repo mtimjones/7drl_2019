@@ -48,36 +48,40 @@ int
 
 const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
    {
-      { SOU | ENTRY         ,                     0,               0 },
-      { NOR | SOU | EAS     , EAS | WES | SOU      ,       WES | SOU },
-      { NOR | SOU | EAS     , NOR | SOU | EAS | WES, NOR | SOU | WES },
-      { NOR | SOU | EAS     , NOR | EAS | WES      ,       NOR | WES },
-      { NOR | EXIT | SPECIAL,                     0,               0 },
+      { SOU | ENTRY         ,                     0,                    0 },
+      { NOR | SOU | EAS     , EAS | WES | SOU      ,       WES | SOU      },
+      { NOR | SOU | EAS     , NOR | SOU | EAS | WES, NOR | SOU | WES      },
+      { NOR | SOU | EAS     , NOR | SOU | EAS | WES, NOR | SOU | WES      },
+      { NOR | SOU | EAS     , NOR | EAS | WES      ,       NOR | WES      },
+      { NOR | EXIT | SPECIAL,                     0,                    0 },
    },
    {
-      {                    0, SOU | ENTRY          ,              0 },
-      { SOU | EAS           , WES | EAS | NOR      , WES | SOU      },
-      { EAS | NOR           , WES | SOU            , WES | NOR      },
-      { EAS | SOU           , WES | NOR | EAS      , WES | SOU      },
-      { EAS | NOR           , WES | SOU | EAS      , WES | NOR      },
-      {                    0, NOR | EXIT | SPECIAL ,              0 },
+      {                    0, SOU | ENTRY          ,                    0 },
+      { SOU | EAS           , WES | EAS | NOR      , WES | SOU            },
+      { EAS | NOR           , WES | SOU            , WES | NOR            },
+      { EAS | SOU           , WES | NOR | EAS      , WES | SOU            },
+      { EAS | NOR           , WES | SOU | EAS      , WES | NOR            },
+      {                    0, NOR | EXIT | SPECIAL ,                    0 },
    },
    {
-      { 0, 0, 1 },
-      { 1, 1, 1 },
-      { 1, 1, 1 },
-      { 1, 1, 1 },
-      { 0, 0, 1 },
+      {                    0,                     0, SOU | ENTRY          },
+      { EAS | SOU           , WES | EAS            , WES | NOR            },
+      { EAS | NOR           , WES | EAS            , WES | SOU            },
+      { EAS | SOU           , WES | EAS            , WES | NOR            },
+      { EAS | NOR           , WES | EAS            , WES | SOU            },
+      {                    0,                     0, NOR | EXIT | SPECIAL },
    },
    {
       { 1, 0, 0 },
       { 1, 1, 1 },
       { 1, 1, 1 },
       { 1, 1, 1 },
+      { 1, 1, 1 },
       { 0, 0, 1 },
    },
    {
       { 0, 0, 1 },
+      { 1, 1, 1 },
       { 1, 1, 1 },
       { 1, 1, 1 },
       { 1, 1, 1 },
@@ -94,7 +98,7 @@ const unsigned short templates [ MAX_TEMPLATES ][ NETROWS ][ NETCOLS ] = {
 
 node_t *network[ NETROWS ][ NETCOLS ];
 
-int cur_template = 1;
+int cur_template = 2;
 
 void display_network( WINDOW *win )
 {
