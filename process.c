@@ -186,6 +186,7 @@ void damageProcess( process_t *process, int damage )
 
             ulogin.stats.max_energy *= 1.2;
             ulogin.stats.energy = ulogin.stats.max_energy;
+            ulogin.stats.level++;
 
             if ( getSRand( ) > 0.5 ) 
             {

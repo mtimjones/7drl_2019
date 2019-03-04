@@ -143,6 +143,7 @@ void handle_user_input( void )
       {
          // time has run out.
          add_chat_message( "Hack timeout." );
+         hack.target->attributes.hackable = 0;
          mode = NORMAL;
       }
    }
