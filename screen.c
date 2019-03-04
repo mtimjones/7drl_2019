@@ -60,6 +60,7 @@ void win_startup( void )
 void win_update( void )
 {
    int Y, X;
+   int bold = 0;
 
    extern int exit_y, exit_x;
 
@@ -92,7 +93,19 @@ void win_update( void )
    wattron( chatwin, COLOR_PAIR( CHAT_MSGS ) );
    for ( int i = 0 ; i < MAX_CHAT_MESSAGES ; i++ )
    {
-      mvwprintw( chatwin, ( i+1 ), 1, "%s", get_chat_message( i ) );
+      char *msg = get_chat_message( i );
+      if ( msg[0] == '!')
+      {
+         wattron( chatwin, A_BOLD );
+         msg++;
+         bold = 1;
+      }
+      mvwprintw( chatwin, ( i+1 ), 1, "%s", msg );
+      if ( bold )
+      {
+         wattroff( chatwin, A_BOLD );
+         bold = 0;
+      }
    }
    wattroff( chatwin, COLOR_PAIR( CHAT_MSGS ) );
 

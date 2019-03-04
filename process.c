@@ -181,7 +181,7 @@ void damageProcess( process_t *process, int damage )
                ( int ) ( ( float ) ulogin.stats.xp_to_next_level * 1.7 );
 
             char line[ 80 ];
-            sprintf( line, "[%d] Increased level.", ulogin.pid );
+            sprintf( line, "![%d] Increased level.", ulogin.pid );
             add_chat_message( line );
 
             ulogin.stats.max_energy *= 1.2;
@@ -191,12 +191,12 @@ void damageProcess( process_t *process, int damage )
             if ( getSRand( ) > 0.5 ) 
             {
                ulogin.stats.attack++;
-               add_chat_message( "Attack increased." );
+               add_chat_message( "!Attack increased." );
             }
             else 
             {
                ulogin.stats.defense++;
-               add_chat_message( "Defense increased." );
+               add_chat_message( "!Defense increased." );
             }
          }
       }
