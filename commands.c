@@ -26,7 +26,7 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   8
+#define MAX_COMMANDS   9
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
@@ -38,6 +38,7 @@ void hack_command( args *arguments );
 void connect_command( args *arguments );
 void exit_command( args *arguments );
 void host_command( args *arguments );
+void stats_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
    { "help",    "Get help about available system commands.",  help_command,    1, 0 },
@@ -48,6 +49,7 @@ commands command_list[ MAX_COMMANDS ] = {
    { "wait",    "Wait, skip a turn.",                         wait_command,    1, 1 },
    { "bash",    "Bash a process (by pid) for 1-3 damage.",    bash_command,    1, 1 },
    { "hack",    "Hack a process with arrow keys for energy.", hack_command,    1, 0 },
+   { "stats",   "Print stats about the ulogin process.",      stats_command,   1, 0 },
 };
 
 int system_command( args *arguments )
@@ -270,3 +272,28 @@ void host_command( args *argument )
    return;
 }
 
+
+void stats_command( args *arguments )
+{
+   char line[ 80 ];
+   process_t *proc = GetPlayer( );
+
+   sprintf( line, "[%04d] Current XP       : %d", proc->pid, proc->stats.xp );
+   add_message( line );
+   sprintf( line, "[%04d] XP to next level : %d", proc->pid, proc->stats.xp_to_next_level );
+   add_message( line );
+   sprintf( line, "[%04d] Hack sucesses    : %d", proc->pid, proc->stats.hack_successes );
+   add_message( line );
+   sprintf( line, "[%04d] Hack failures    : %d", proc->pid, proc->stats.hack_failures );
+   add_message( line );
+   sprintf( line, "[%04d] Processes killed : %d", proc->pid, proc->stats.kills );
+   add_message( line );
+   sprintf( line, "[%04d] Health added     : %d", proc->pid, proc->stats.health_added );
+   add_message( line );
+   sprintf( line, "[%04d] Damage given     : %d", proc->pid, proc->stats.damage_given );
+   add_message( line );
+   sprintf( line, "[%04d] Damage received  : %d", proc->pid, proc->stats.damage_received );
+   add_message( line );
+
+   return;
+}

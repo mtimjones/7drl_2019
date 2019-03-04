@@ -25,6 +25,12 @@ typedef struct stats_t
    int ext_damage;
    int xp;
    int xp_to_next_level;
+   int hack_successes;
+   int hack_failures;
+   int kills;
+   int health_added;
+   int damage_given;
+   int damage_received;
 } stats_t;
 
 typedef struct attributes_t

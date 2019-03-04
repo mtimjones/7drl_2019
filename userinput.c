@@ -129,6 +129,7 @@ void handle_user_input( void )
                healPlayer( getRand( hack.target->stats.max_energy ) );
                hack.target->attributes.active = 0;
                mode = NORMAL;
+               GetPlayer( )->stats.hack_successes++;
                return;
             }
          }
@@ -136,6 +137,7 @@ void handle_user_input( void )
          {
             add_chat_message( "Hack failed." );
             mode = NORMAL;
+            GetPlayer( )->stats.hack_failures++;
             hack.target->attributes.hackable = 0;
          }
       }
@@ -144,6 +146,7 @@ void handle_user_input( void )
          // time has run out.
          add_chat_message( "Hack timeout." );
          hack.target->attributes.hackable = 0;
+         GetPlayer( )->stats.hack_failures++;
          mode = NORMAL;
       }
    }

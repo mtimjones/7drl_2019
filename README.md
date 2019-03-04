@@ -460,6 +460,8 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the trap command.
 
+- [x]  Implement the stats command.
+
 - [ ]  Implement the barrier command.
 
 - [ ]  Implement the counter command.
@@ -495,4 +497,6 @@ or a path from entry to exit nodes.
 - [x]  Implement network initialization via network templates.
 
 - [ ]  Implement the end game (perhaps in the context of the Executive process).
+
+- [ ]  Add an 'H' field to attributes display to show processes that are hackable.
 

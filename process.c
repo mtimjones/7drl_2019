@@ -162,9 +162,20 @@ int getPlayerAttack( void )
 
 void damageProcess( process_t *process, int damage )
 {
+
+   if ( process->process_type == User )
+   {
+      ulogin.stats.damage_received += damage;
+   }
+   else
+   {
+      ulogin.stats.damage_given += damage;
+   }
+
    process->stats.energy -= damage;
    if ( process->stats.energy <= 0 )
    {
+      ulogin.stats.kills++;
       process->stats.energy = 0;
       process->attributes.active = 0;
       char line[ 80 ];
@@ -177,10 +188,10 @@ void damageProcess( process_t *process, int damage )
          ulogin.stats.xp += ( ( process->stats.attack + process->stats.defense ) );
          if ( ulogin.stats.xp >= ulogin.stats.xp_to_next_level )
          {
+            char line[ 80 ];
             ulogin.stats.xp_to_next_level = 
                ( int ) ( ( float ) ulogin.stats.xp_to_next_level * 1.7 );
 
-            char line[ 80 ];
             sprintf( line, "![%d] Increased level.", ulogin.pid );
             add_chat_message( line );
 
@@ -191,12 +202,14 @@ void damageProcess( process_t *process, int damage )
             if ( getSRand( ) > 0.5 ) 
             {
                ulogin.stats.attack++;
-               add_chat_message( "!Attack increased." );
+               sprintf( line, "![%04d] Attack increased.", ulogin.pid );
+               add_chat_message( line );
             }
             else 
             {
                ulogin.stats.defense++;
-               add_chat_message( "!Defense increased." );
+               sprintf( line, "![%04d] Defense increased.", ulogin.pid );
+               add_chat_message( line );
             }
          }
       }
@@ -209,6 +222,7 @@ void damageProcess( process_t *process, int damage )
 void healPlayer( int energy )
 {
    ulogin.stats.energy += energy;
+   ulogin.stats.health_added += energy;
    if ( ulogin.stats.energy > ulogin.stats.max_energy )
    {
       ulogin.stats.energy = ulogin.stats.max_energy;
