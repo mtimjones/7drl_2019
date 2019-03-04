@@ -95,7 +95,7 @@ void display_process( WINDOW *window, int line, process_t *process )
 
       if ( process->attributes.user )
       {
-         mvwprintw( window, line, 43, "U" );
+         mvwprintw( window, line, 43, "@" );
       }
       if ( process->attributes.attack )
       {

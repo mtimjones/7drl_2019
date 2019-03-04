@@ -80,7 +80,7 @@ void win_update( void )
    mvwprintw( chatwin, 0, 2, " Message Window " );
    wattroff( chatwin, A_STANDOUT );
 
-   mvwprintw( networkwin, 0, 40, "%6d", (GameTime/100) );
+   mvwprintw( networkwin, 0, 40, "%6d ", (GameTime/100) );
 
    wattron( consolewin, COLOR_PAIR( CONSOLE_MSGS ) );
    for ( int i = 0 ; i < MAX_MESSAGES ; i++ )

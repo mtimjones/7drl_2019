@@ -147,21 +147,7 @@ void display_network( WINDOW *win )
       }
    }
 
-#if 0
-   // Temp
-   mvwprintw( win,  2, 4, "[xx.xx.xx.xx]                            " );
-   mvwprintw( win,  3, 4, "      |                                  " );
-   mvwprintw( win,  4, 4, " xx.xx.xx.xx - xx.xx.xx.xx - xx.xx.xx.xx " );
-   mvwprintw( win,  5, 4, "      |             |             |      " );
-   mvwprintw( win,  6, 4, " xx.xx.xx.xx - xx.xx.xx.xx - xx.xx.xx.xx " );
-   mvwprintw( win,  7, 4, "      |             |             |      " );
-   mvwprintw( win,  8, 4, " xx.xx.xx.xx - xx.xx.xx.xx - xx.xx.xx.xx " );
-   mvwprintw( win,  9, 4, "      |             |             |      " );
-   mvwprintw( win, 10, 4, " xx.xx.xx.xx - xx.xx.xx.xx - xx.xx.xx.xx " );
-   mvwprintw( win, 11, 4, "      |                                  " );
-   mvwprintw( win, 12, 4, " xx.xx.xx.xx                             " );
-   // Temwin
-#endif
+   return;
 }
 
 // Called by screen to display the processes of current_node();
