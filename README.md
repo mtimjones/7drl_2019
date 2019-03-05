@@ -135,7 +135,8 @@ as armor).
       alarm
       encrypt   Obscures the PID of processes       S  100%      0 / 5         5*lvl
                 until killed.
-      watchdog  Calls in reinforcement minions.     S   50%      0 / 6            10
+      charger   Low frequency attack but high       S   20%      6 / 4            30
+                attack damage.  Must kill fast.
       upgrade   Basic damage buff for all        BA     50%      3 / 1            10
                 enemy processes.
       fork      Replicating process that            S   50%      0 / 6
@@ -478,7 +479,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the encrypt process.
 
-- [ ]  Implement the watchdog process.
+- [ ]  Implement the charger process (charges up, high attack, low frequency of attack).
 
 - [ ]  Implement the upgrade process.
 
