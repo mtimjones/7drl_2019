@@ -106,6 +106,7 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->process_type = type;
          process->pid = getRand( 9999 );
          process->attributes.hackable = 0;
+         process->attributes.buff = 1;
          process->attributes.active = 1;
          process->attributes.attack = 0;
          process->stats.level = level;
