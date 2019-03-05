@@ -498,5 +498,5 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the end game (perhaps in the context of the Executive process).
 
-- [ ]  Add an 'H' field to attributes display to show processes that are hackable.
+- [x]  Add an 'H' field to attributes display to show processes that are hackable.
 
