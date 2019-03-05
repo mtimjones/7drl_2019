@@ -482,9 +482,9 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the upgrade process.
 
-- [ ]  Implement the fork process.
+- [x]  Implement the fork process.
 
-- [ ]  Implement the minion process.
+- [x]  Implement the minion process.
 
 - [ ]  Implement the random process.
 

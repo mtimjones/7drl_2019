@@ -24,7 +24,14 @@ void fork_behavior( process_t *process )
    // If a slot was available to fill, initialize the minion.
    if ( minion )
    {
+      char line[ 80 ];
+
       ( void ) create_process( minion, Minion, get_level( ) );
+      
+      sprintf( line, "%s [%04d]: spawned a new %s [%04d]",
+               process->name, process->pid, minion->name, minion->pid );
+
+      add_message( line );
    }
 
    return;

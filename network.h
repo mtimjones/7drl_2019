@@ -34,3 +34,5 @@ process_t *find_process_by_pid( unsigned short pid );
 
 int connect_to_ip_address_from_node( char *ip_adrs );
 
+void get_process_buffs( int *attack, int *defense );
+

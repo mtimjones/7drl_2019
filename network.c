@@ -409,3 +409,23 @@ int connect_to_ip_address_from_node ( char *ip_adrs )
    return ret;
 }
 
+
+void get_process_buffs( int *attack, int *defense )
+{
+   *attack = *defense = 0;
+
+   for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
+   {
+      if ( current_node( )->processes[ index ] )
+      {
+         if ( current_node( )->processes[ index ]->attributes.buff )
+         {
+            *attack += current_node( )->processes[ index ]->stats.attack;
+            *defense += current_node( )->processes[ index ]->stats.defense;
+         }
+      }
+   }
+
+   return;
+}
+

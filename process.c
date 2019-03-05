@@ -112,17 +112,22 @@ process_t *create_process( process_t *process, process_type_t type, int level )
 
 void display_process( WINDOW *window, int line, process_t *process )
 {
+   int attack, defense;
+
+   get_process_buffs( &attack, &defense );
+
    if ( process->attributes.active )
    {
       mvwprintw( window, line,  4, "%4d  ", process->pid );
       mvwprintw( window, line, 10, "%-10s  ", process->name );
 // display if process not suspended.
       mvwprintw( window, line, 22, "%3d  ", (100 / process->action_rate ) );
-      mvwprintw( window, line, 26, "%3d  ", process->stats.attack );
-      mvwprintw( window, line, 31, "%3d  ", process->stats.defense );
+      mvwprintw( window, line, 26, "%3d  ", process->stats.attack + attack );
+      mvwprintw( window, line, 31, "%3d  ", process->stats.defense + defense );
       mvwprintw( window, line, 36, "%3d       ", process->stats.level );
       mvwprintw( window, line, 49, "%3d  ", process->stats.energy );
 
+      mvwprintw( window, line, 43, "     " );
       if ( process->attributes.user )
       {
          mvwprintw( window, line, 43, "@" );
@@ -138,6 +143,10 @@ void display_process( WINDOW *window, int line, process_t *process )
       if ( process->attributes.special )
       {
          mvwprintw( window, line, 46, "S" );
+      }
+      if ( process->attributes.hackable )
+      {
+         mvwprintw( window, line, 46, "H" );
       }
    }
 
@@ -228,7 +237,7 @@ void damageProcess( process_t *process, int damage )
             ulogin.stats.energy = ulogin.stats.max_energy;
             ulogin.stats.level++;
 
-            if ( getSRand( ) > 0.5 ) 
+            if ( getRand( 10 ) > 5 ) 
             {
                ulogin.stats.attack++;
                sprintf( line, "![%04d] Attack increased.", ulogin.pid );
