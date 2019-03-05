@@ -184,8 +184,7 @@ void create_network_processes( node_t *node, int level )
          if ( templates[ cur_template ][ node->row ][ node->col ] & SPECIAL )
          {
             process = calloc( 1, sizeof( process_t ) );
-            node->processes[ i ] = create_process( process, Fork, level );
-            i++;
+            node->processes[ i++ ] = create_process( process, Fork, level );
          }
          break;
       case 2:
@@ -197,6 +196,12 @@ void create_network_processes( node_t *node, int level )
       default:
          assert( 0 );
          break;
+   }
+
+   if ( getSRand( ) > 0.5 )
+   {
+      process = calloc( 1, sizeof( process_t ) );
+      node->processes[ i++ ] = create_process( process, Sentry, level );
    }
 
    for ( ; i < limit ; i++ )

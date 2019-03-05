@@ -472,7 +472,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the ulogin process callback function.
 
-- [ ]  Implement the sentry process.
+- [x]  Implement the sentry process.
 
 - [x]  Implement the daemon process.
 

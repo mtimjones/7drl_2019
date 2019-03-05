@@ -101,6 +101,21 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->stats.base_damage = 2;
          process->stats.ext_damage = 2*level;
          break;
+      case Sentry:
+         strcpy( process->name, "sentry" );
+         process->process_type = type;
+         process->pid = getRand( 9999 );
+         process->attributes.hackable = 0;
+         process->attributes.active = 1;
+         process->attributes.attack = 0;
+         process->stats.level = level;
+         process->stats.attack = 0;
+         process->stats.defense = level + getRand( 2 );
+         process->stats.max_energy = process->stats.energy = 15+2*level;
+         process->action_rate = 1;
+         process->stats.base_damage = 0;
+         process->stats.ext_damage = 0;
+         break;
 
       default:
          break;
@@ -176,7 +191,10 @@ void execute_process( process_t *process )
       if ( ++process->state_value >= process->action_rate )
       {
          process->state_value = 0;
-         ( process->function )( process );
+         if ( process->function )
+         {
+            ( process->function )( process );
+         }
       }
    }
 }

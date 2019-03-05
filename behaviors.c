@@ -4,8 +4,11 @@
 void daemon_behavior( process_t *process )
 {
    char line[80];
+   int attack, defense;
 
-   if ( hit( process->stats.attack, getPlayerDefense( ) ) )
+   get_process_buffs( &attack, &defense );
+
+   if ( hit( process->stats.attack + attack, getPlayerDefense( ) ) )
    {
       int damage = process->stats.base_damage + getRand( process->stats.ext_damage );
       sprintf( line, "[%04d] %s hits for %d.", process->pid, process->name, damage );
