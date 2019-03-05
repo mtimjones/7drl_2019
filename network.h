@@ -1,6 +1,6 @@
 
 #define MAX_IP_ADRS              12
-#define MAX_PROCESSES_PER_NODE   11
+#define MAX_PROCESSES_PER_NODE   10
 
 typedef struct node_s node_t;
 

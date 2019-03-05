@@ -185,17 +185,13 @@ int is_process_active( process_t *process )
 }
 
 
-void execute_process( process_t *process )
+void schedule_process( process_t *process )
 {
    if ( is_process_active( process ) )
    {
-      if ( ++process->state_value >= process->action_rate )
+      if ( process->function )
       {
-         process->state_value = 0;
-         if ( process->function )
-         {
-            ( process->function )( process );
-         }
+         ( process->function )( process, PROCESS_EXECUTE );
       }
    }
 }

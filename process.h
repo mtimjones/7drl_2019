@@ -46,7 +46,7 @@ typedef struct attributes_t
 
 typedef struct process_s process_t;
 
-typedef void ( process_func_t )( process_t * );
+typedef void ( process_func_t )( process_t *, int );
 
 #define MAX_NAME   20
 
@@ -70,7 +70,7 @@ void display_network_processes( WINDOW *window );
 void display_player( WINDOW *window, int line );
 void display_process( WINDOW *window, int line, process_t *process );
 int  is_process_active( process_t *process );
-void execute_process( process_t *process );
+void schedule_process( process_t *process );
 int  hit( int attack, int defense );
 int  getPlayerDefense( void );
 int  getPlayerAttack( void );

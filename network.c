@@ -331,7 +331,7 @@ void execute_network( void )
 {
    for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
    {
-      execute_process( current_node()->processes[ index ] );
+      schedule_process( current_node()->processes[ index ] );
    }
 
    return;
