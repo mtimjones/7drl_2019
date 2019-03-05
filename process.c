@@ -33,10 +33,8 @@ process_t *GetPlayer( void )
    return &ulogin;
 }
 
-process_t *create_process( process_type_t type, int level )
+process_t *create_process( process_t *process, process_type_t type, int level )
 {
-   process_t *process = calloc( 1, sizeof( process_t ) );
-
    switch( type )
    {
       case Daemon:
@@ -70,6 +68,38 @@ process_t *create_process( process_type_t type, int level )
          process->function = &daemon_behavior;
          process->stats.base_damage = level;
          process->stats.ext_damage = level;
+         break;
+      case Fork:
+         strcpy( process->name, "fork" );
+         process->process_type = type;
+         process->pid = getRand( 9999 );
+         process->attributes.hackable = 0;
+         process->attributes.active = 1;
+         process->attributes.special = 1;
+         process->stats.level = level;
+         process->stats.attack = 0;
+         process->stats.defense = level+3;
+         process->stats.max_energy = process->stats.energy = 20+level;
+         process->action_rate = 2;
+         process->function = &fork_behavior;
+         process->stats.base_damage = 0;
+         process->stats.ext_damage = 0;
+         break;
+      case Minion:
+         strcpy( process->name, "minion" );
+         process->process_type = type;
+         process->pid = getRand( 9999 );
+         process->attributes.hackable = 1;
+         process->attributes.active = 1;
+         process->attributes.attack = 1;
+         process->stats.level = level;
+         process->stats.attack = level;
+         process->stats.defense = level + getRand( 2 );
+         process->stats.max_energy = process->stats.energy = 10+2*level;
+         process->action_rate = 1;
+         process->function = &daemon_behavior;
+         process->stats.base_damage = 2;
+         process->stats.ext_damage = 2*level;
          break;
 
       default:
@@ -162,7 +192,6 @@ int getPlayerAttack( void )
 
 void damageProcess( process_t *process, int damage )
 {
-
    if ( process->process_type == User )
    {
       ulogin.stats.damage_received += damage;
@@ -212,6 +241,8 @@ void damageProcess( process_t *process, int damage )
                add_chat_message( line );
             }
          }
+
+         remove_process_from_node( process );
       }
 
    }

@@ -6,6 +6,11 @@ unsigned int GameRunning = 1;
 unsigned int GameTime = 0;
 int          Level = 1;
 
+int get_level( void )
+{
+   return Level;
+}
+
 int main( int argc, char *argv[] )
 {
    srand( time( NULL ) );

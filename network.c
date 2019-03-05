@@ -173,19 +173,26 @@ void display_network_processes( WINDOW *win )
 
 void create_network_processes( node_t *node, int level )
 {
-   int i;
+   int i = 0;
    const int proclimit[ 6 ] = { 1, 2, 3, 5, 7, 8 };
    int limit = 2 + getRand( proclimit[ level-1 ] );
+   process_t *process;
 
    switch( level )
    {
       case 1:  // First level only daemons
+         if ( templates[ cur_template ][ node->row ][ node->col ] & SPECIAL )
+         {
+            process = calloc( 1, sizeof( process_t ) );
+            node->processes[ i ] = create_process( process, Fork, level );
+            i++;
+         }
+         break;
       case 2:
       case 3:  // Fork
       case 4:
       case 5:
       case 6:  // Final level, introduce the executive
-         i = 0;
          break;
       default:
          assert( 0 );
@@ -194,13 +201,14 @@ void create_network_processes( node_t *node, int level )
 
    for ( ; i < limit ; i++ )
    {
+      process = calloc( 1, sizeof( process_t ) );
       if ( getSRand( ) > 0.5 )
       {
-         node->processes[ i ] = create_process( Daemon, level );
+         node->processes[ i ] = create_process( process, Daemon, level );
       }
       else
       {
-         node->processes[ i ] = create_process( Worker, level );
+         node->processes[ i ] = create_process( process, Worker, level );
       }
    }
 
@@ -252,6 +260,39 @@ node_t *create_node( int level, unsigned short template, int row, int col )
    }
 
    return node;
+}
+
+
+void remove_process_from_node( process_t *proc )
+{
+   for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
+   {
+      if ( current_node( )->processes[ index ] == proc )
+      {
+         free( proc );
+         current_node( )->processes[ index ] = ( process_t * ) 0;
+         return;
+      }
+   }
+
+   return;
+}
+
+
+process_t *add_process_to_node( void )
+{
+   process_t *proc = ( process_t * ) 0;
+
+   for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
+   {
+      if ( current_node( )->processes[ index ] == ( process_t * ) 0 )
+      {
+         proc = current_node( )->processes[ index ] = calloc( 1, sizeof( process_t ) );
+         break;
+      }
+   }
+
+   return proc;
 }
 
 

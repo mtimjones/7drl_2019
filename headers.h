@@ -57,7 +57,6 @@ int  find_file( int system, char *filename );
 int  find_empty_file( int system );
 int  find_empty_process( void );
 int  find_process( unsigned short pid );
-void create_process_from_file( int pindex, int findex, unsigned int arg );
 int  find_system( char *ip_address );
 void move_file( int to, int from, char *file );
 int  can_execute( void );
@@ -75,4 +74,4 @@ node_t *pop_node( void );
 #define getSRand()      ( ( float ) rand( ) / ( float ) RAND_MAX )
 #define getRand( x )    ( int ) ( ( x ) * getSRand( ) )
 
-
+int get_level( void );

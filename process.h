@@ -64,7 +64,7 @@ typedef struct process_s
 } process_t;
 
 void create_player( void );
-process_t *create_process( process_type_t type, int level );
+process_t *create_process( process_t *proc, process_type_t type, int level );
 void display_network( WINDOW *window );
 void display_network_processes( WINDOW *window );
 void display_player( WINDOW *window, int line );
@@ -78,4 +78,5 @@ void damageProcess( process_t *process, int damage );
 int  isPlayerDead( void );
 process_t *GetPlayer( void );
 void healPlayer( int energy );
-
+void remove_process_from_node( process_t *process );
+process_t *add_process_to_node( void );
