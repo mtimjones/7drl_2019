@@ -37,6 +37,7 @@ void win_startup( void );
 void win_update( void );
 void win_shutdown( void );
 int  get_user_char( void );
+void clear_network_window( void );
 
 // Time API
 unsigned long long getTimestamp( void );

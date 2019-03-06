@@ -410,6 +410,8 @@ void execute_network( void )
 
       increment_level( );
 
+      clear_network_window( );
+
       create_network( get_level( ) );
    }
 

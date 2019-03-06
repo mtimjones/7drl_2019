@@ -130,6 +130,17 @@ void win_update( void )
 }
 
 
+void clear_network_window( void )
+{
+   for ( int i = 1 ; i < 13 ; i++ )
+   {
+      mvwprintw( networkwin, i, 1, "                                             " );
+   }
+
+   return;
+}
+
+
 void win_shutdown( void )
 {
    delwin( consolewin );
