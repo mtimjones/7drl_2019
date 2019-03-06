@@ -178,24 +178,27 @@ void create_network_processes( node_t *node, int level )
    int limit = 2 + getRand( proclimit[ level-1 ] );
    process_t *process;
 
-   switch( level )
+   if ( templates[ cur_template ][ node->row ][ node->col ] & SPECIAL )
    {
-      case 1:  // First level only daemons
-         if ( templates[ cur_template ][ node->row ][ node->col ] & SPECIAL )
-         {
+      switch( level )
+      {
+         case 1:  // First level only daemons
             process = calloc( 1, sizeof( process_t ) );
             node->processes[ i++ ] = create_process( process, Fork, level );
-         }
-         break;
-      case 2:
-      case 3:  // Fork
-      case 4:
-      case 5:
-      case 6:  // Final level, introduce the executive
-         break;
-      default:
-         assert( 0 );
-         break;
+            break;
+         case 2:
+            process = calloc( 1, sizeof( process_t ) );
+            node->processes[ i++ ] = create_process( process, Cron, level );
+            break;
+         case 3:  // Fork
+         case 4:
+         case 5:
+         case 6:  // Final level, introduce the executive
+            break;
+         default:
+            assert( 0 );
+            break;
+      }
    }
 
    if ( getSRand( ) > 0.8 )

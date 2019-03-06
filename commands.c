@@ -154,18 +154,14 @@ void bash_command( args *arguments )
       }
       else
       {
-         char line[80];
          if ( hit( getPlayerAttack( ), proc->stats.defense ) )
          {
+            char line[80];
             int  damage = 1 + getRand( 3 );
             damageProcess( proc, damage );
             sprintf( line, "[%04d] hit for %d energy", proc->pid, damage );
+            add_chat_message( line );
          }
-         else
-         {
-            sprintf( line, "[%04d] process defends.", proc->pid );
-         }
-         add_chat_message( line );
       }
    }
 

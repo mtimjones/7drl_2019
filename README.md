@@ -479,7 +479,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the encrypt process.
 
-- [ ]  Implement the charger process (charges up, high attack, low frequency of attack).
+- [x]  Implement the cron process (charges up, high attack, low frequency of attack).
 
 - [x]  Implement the armor process.
 

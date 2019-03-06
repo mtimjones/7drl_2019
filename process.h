@@ -9,7 +9,7 @@ typedef enum {
    Armor,
    Fork,
    Minion,
-   Random,
+   Cron,
    Executive,
    Total
 } process_type_t;

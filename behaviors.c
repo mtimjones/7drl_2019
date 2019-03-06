@@ -93,3 +93,42 @@ void armor_behavior( process_t *process, int action )
 }
 
 
+void cron_behavior( process_t *process, int action )
+{
+   char line[ 80 ];
+   int  attack, defense;
+
+   if ( action == PROCESS_INIT )
+   {
+      sprintf( line, "[%04d]: %s is charging.", process->pid, process->name );
+      add_message( line );
+   }
+   else if ( action == PROCESS_EXECUTE )
+   {
+      if ( ++process->state_value == ( process->action_rate / 2 ) )
+      {
+         sprintf( line, "[%04d]: %s is half charged.", process->pid, process->name );
+         add_message( line );
+      }
+      else if ( ++process->state_value >= process->action_rate )
+      {
+         process->state_value = 0;
+
+         get_process_buffs( &attack, &defense );
+
+         if ( hit( process->stats.attack + attack, getPlayerDefense( ) ) )
+         {
+            int damage = process->stats.base_damage + 
+                         getRand( process->stats.ext_damage );
+            sprintf( line, "[%04d] %s hits for %d.", 
+                     process->pid, process->name, damage );
+            add_chat_message( line );
+            damageProcess( GetPlayer( ), damage );
+         }
+         
+      }
+
+   }
+
+   return;
+}

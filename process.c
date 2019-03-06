@@ -135,6 +135,22 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->stats.base_damage = 0;
          process->stats.ext_damage = 0;
          break;
+      case Cron:
+         strcpy( process->name, "cron" );
+         process->process_type = type;
+         process->pid = getRand( 9999 );
+         process->attributes.hackable = 0;
+         process->attributes.active = 1;
+         process->attributes.attack = 1;
+         process->stats.level = level+2;
+         process->stats.attack = level+2;
+         process->stats.defense = level;
+         process->stats.max_energy = process->stats.energy = 17+level;
+         process->action_rate = 8;
+         process->function = &cron_behavior;
+         process->stats.base_damage = 10;
+         process->stats.ext_damage = 3*level;
+         break;
 
       default:
          break;
