@@ -386,36 +386,26 @@ void free_network( void )
 }
 
 
-int active_processes( void )
-{
-   int active = 0;
-
-   for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
-   {
-      if ( current_node()->processes[ index ] )
-      {
-         active++;
-      }
-   }
-   
-   return active;
-}
-
-
 void execute_network( void )
 {
    int row = current_node()->row;
    int col = current_node()->col;
+   int active = 0;
 
    for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
    {
-      schedule_process( current_node()->processes[ index ] );
+      if ( is_process_active( current_node()->processes[ index ] ) )
+      {
+         schedule_process( current_node()->processes[ index ] );
+         active++;
+      }
    }
 
    // If this is the exit node, and it's clear, drop into the next level.
-   if ( ( templates[ cur_template ][ row ][ col ] & EXIT ) &&
-        ( active_processes( ) == 0 ) )
+   if ( ( templates[ cur_template ][ row ][ col ] & EXIT ) && ( active == 0 ) )
    {
+      add_chat_message( "!Level complete.  Process migrating." );
+
       free_network( );
 
       increment_level( );
