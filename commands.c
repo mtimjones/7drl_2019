@@ -48,7 +48,7 @@ commands command_list[ MAX_COMMANDS ] = {
    { "exit",    "Return to the previously connected system.", exit_command,    1, 0 },
    { "wait",    "Wait, skip a turn.",                         wait_command,    1, 1 },
    { "bash",    "Bash a process (by pid) for 1-3 damage.",    bash_command,    1, 1 },
-   { "hack",    "Hack a process with arrow keys for energy.", hack_command,    1, 0 },
+   { "hack",    "Hack a process with arrow keys for energy.", hack_command,    1, 1 },
    { "stats",   "Print stats about the ulogin process.",      stats_command,   1, 0 },
 };
 
@@ -235,6 +235,7 @@ void connect_command( args *arguments )
       if ( ret )
       {
          sprintf( line, "Connected to %s", arguments->args[ 1] );
+         ( current_node( )->node_function )( current_node( ), NODE_ENTRY );
       }
       else
       {

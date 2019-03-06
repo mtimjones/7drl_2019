@@ -114,6 +114,24 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->stats.defense = level + getRand( 2 );
          process->stats.max_energy = process->stats.energy = 15+2*level;
          process->action_rate = 1;
+         process->function = &sentry_behavior;
+         process->stats.base_damage = 0;
+         process->stats.ext_damage = 0;
+         break;
+      case Armor:
+         strcpy( process->name, "armor" );
+         process->process_type = type;
+         process->pid = getRand( 9999 );
+         process->attributes.hackable = 0;
+         process->attributes.buff = 1;
+         process->attributes.active = 1;
+         process->attributes.attack = 0;
+         process->stats.level = level;
+         process->stats.attack = level + getRand( 2 );
+         process->stats.defense = level;
+         process->stats.max_energy = process->stats.energy = 15+2*level;
+         process->action_rate = 1;
+         process->function = &armor_behavior;
          process->stats.base_damage = 0;
          process->stats.ext_damage = 0;
          break;

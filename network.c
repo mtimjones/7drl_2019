@@ -198,10 +198,18 @@ void create_network_processes( node_t *node, int level )
          break;
    }
 
-   if ( getSRand( ) > 0.5 )
+   if ( getSRand( ) > 0.8 )
    {
-      process = calloc( 1, sizeof( process_t ) );
-      node->processes[ i++ ] = create_process( process, Sentry, level );
+      if ( getSRand( ) > 0.5 )
+      {
+         process = calloc( 1, sizeof( process_t ) );
+         node->processes[ i++ ] = create_process( process, Sentry, level );
+      }
+      else
+      {
+         process = calloc( 1, sizeof( process_t ) );
+         node->processes[ i++ ] = create_process( process, Armor, level );
+      }
    }
 
    for ( ; i < limit ; i++ )
@@ -246,6 +254,29 @@ void set_visible_nodes( void )
    return;
 }
 
+void node_func( node_t *node, int state )
+{
+   if ( state == NODE_ENTRY )
+   {
+      // Invoke each processes init behavior.
+      for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
+      {
+         if ( is_process_active( node->processes[ index ] ) )
+         {
+            ( node->processes[ index ]->function )( node->processes[ index ], PROCESS_INIT );
+         }
+      }
+
+   }
+   else
+   {
+
+
+   }
+
+   return;
+}
+
 node_t *create_node( int level, unsigned short template, int row, int col )
 {
    node_t *node = calloc( 1, sizeof( node_t ) );
@@ -255,6 +286,7 @@ node_t *create_node( int level, unsigned short template, int row, int col )
 
    // Initialize the node.
    node->row = row; node->col = col;
+   node->node_function = &node_func;
 
    create_network_processes( node, level );
 

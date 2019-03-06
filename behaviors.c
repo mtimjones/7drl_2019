@@ -55,12 +55,38 @@ void fork_behavior( process_t *process, int action )
 
             ( void ) create_process( minion, Minion, get_level( ) );
       
-            sprintf( line, "%s [%04d]: spawned a new %s [%04d]",
-                     process->name, process->pid, minion->name, minion->pid );
+            sprintf( line, "[%04d]: %s spawned a new %s [%04d]",
+                     process->pid, process->name, minion->name, minion->pid );
 
             add_message( line );
          }
       }
+   }
+
+   return;
+}
+
+
+void sentry_behavior( process_t *process, int action )
+{
+   if ( action == PROCESS_INIT )
+   {
+      char line[ 80 ];
+      sprintf( line, "[%04d]: %s buffing attack.", process->pid, process->name );
+      add_message( line );
+   }
+
+   return;
+}
+
+
+void armor_behavior( process_t *process, int action )
+{
+   if ( action == PROCESS_INIT )
+   {
+      char line[ 80 ];
+      sprintf( line, "[%04d]: %s buffing defense.", process->pid, process->name );
+      add_message( line );
    }
 
    return;

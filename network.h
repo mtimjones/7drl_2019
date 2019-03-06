@@ -12,7 +12,10 @@ typedef enum
    net_left,
 } net_dir;
 
-typedef void ( *node_function )( node_t *node );
+typedef void ( node_function_t )( node_t *node, int state );
+
+#define NODE_ENTRY     0
+#define NODE_EXIT      1
 
 typedef struct node_s
 {
@@ -24,8 +27,7 @@ typedef struct node_s
    unsigned int visited:1;
    unsigned int visible:1; // Auto set for entry node
    unsigned int :0;
-   node_function node_entry_function;
-   node_function node_exit_function;
+   node_function_t *node_function;
 } node_t;
 
 void create_network( int level );

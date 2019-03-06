@@ -481,7 +481,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the charger process (charges up, high attack, low frequency of attack).
 
-- [ ]  Implement the upgrade process.
+- [x]  Implement the armor process.
 
 - [x]  Implement the fork process.
 
@@ -493,7 +493,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the death process and the morgue.
 
-- [ ]  Implement a way for processes to communicate with the user (via chat).
+- [x]  Implement a way for processes to communicate with the user (via chat).
 
 - [x]  Implement network initialization via network templates.
 

@@ -6,7 +6,7 @@ typedef enum {
    Daemon,
    Sentry,
    Encrypt,
-   Upgrade,
+   Armor,
    Fork,
    Minion,
    Random,
