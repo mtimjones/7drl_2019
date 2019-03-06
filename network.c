@@ -359,11 +359,68 @@ void create_network( int level )
 }
 
 
+void free_network( void )
+{
+   int rows, cols;
+
+   for ( rows = 0 ; rows < NETROWS ; rows++ )
+   {
+      for ( cols = 0 ; cols < NETCOLS ; cols++ )
+      {
+         if ( network[ rows ][ cols ] )
+         {
+            for ( int i = 0 ; i < MAX_PROCESSES_PER_NODE ; i++ )
+            {
+               if ( network[ rows ][ cols ]->processes[ i ] )
+               {
+                  free( ( void * ) network[ rows ][ cols ]->processes[ i ] );
+               }
+            }
+
+            free( ( void * ) network[ rows ][ cols ] );
+         }
+      }
+   }
+
+   return;
+}
+
+
+int active_processes( void )
+{
+   int active = 0;
+
+   for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
+   {
+      if ( current_node()->processes[ index ] )
+      {
+         active++;
+      }
+   }
+   
+   return active;
+}
+
+
 void execute_network( void )
 {
+   int row = current_node()->row;
+   int col = current_node()->col;
+
    for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
    {
       schedule_process( current_node()->processes[ index ] );
+   }
+
+   // If this is the exit node, and it's clear, drop into the next level.
+   if ( ( templates[ cur_template ][ row ][ col ] & EXIT ) &&
+        ( active_processes( ) == 0 ) )
+   {
+      free_network( );
+
+      increment_level( );
+
+      create_network( get_level( ) );
    }
 
    return;

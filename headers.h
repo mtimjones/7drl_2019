@@ -75,3 +75,4 @@ node_t *pop_node( void );
 #define getRand( x )    ( int ) ( ( x ) * getSRand( ) )
 
 int get_level( void );
+int increment_level( void );

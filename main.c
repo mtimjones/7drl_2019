@@ -11,6 +11,11 @@ int get_level( void )
    return Level;
 }
 
+int increment_level( void )
+{
+   Level++;
+}
+
 int main( int argc, char *argv[] )
 {
    srand( time( NULL ) );

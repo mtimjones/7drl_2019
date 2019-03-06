@@ -127,8 +127,8 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.active = 1;
          process->attributes.attack = 0;
          process->stats.level = level;
-         process->stats.attack = level + getRand( 2 );
-         process->stats.defense = level;
+         process->stats.attack = 0;
+         process->stats.defense = level + getRand( 2 );
          process->stats.max_energy = process->stats.energy = 15+2*level;
          process->action_rate = 1;
          process->function = &armor_behavior;
@@ -270,7 +270,7 @@ void damageProcess( process_t *process, int damage )
             ulogin.stats.energy = ulogin.stats.max_energy;
             ulogin.stats.level++;
 
-            if ( getRand( 10 ) > 5 ) 
+            if ( getSRand( ) > 0.5 ) 
             {
                ulogin.stats.attack++;
                sprintf( line, "![%04d] Attack increased.", ulogin.pid );
