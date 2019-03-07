@@ -451,9 +451,9 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the hack command and the QTE system.
 
-- [ ]  Implement the ability to learn new commands at gained levels.
+- [x]  Implement the ability to learn new commands at gained levels.
 
-- [ ]  Implement the cut command.
+- [x]  Implement the cut command.
 
 - [ ]  Implement the suspend command.
 
