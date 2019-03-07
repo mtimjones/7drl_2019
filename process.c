@@ -309,6 +309,7 @@ int getPlayerAttack( void )
    return ulogin.stats.attack;
 }
 
+
 void damageProcess( process_t *process, int damage )
 {
    if ( process->process_type == User )
@@ -359,6 +360,8 @@ void damageProcess( process_t *process, int damage )
                sprintf( line, "![%04d] Defense increased.", ulogin.pid );
                add_chat_message( line );
             }
+
+            learn_new_command( ulogin.stats.level );
          }
 
          remove_process_from_node( process );

@@ -26,7 +26,7 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   9
+#define MAX_COMMANDS   10
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
@@ -39,6 +39,7 @@ void connect_command( args *arguments );
 void exit_command( args *arguments );
 void host_command( args *arguments );
 void stats_command( args *arguments );
+void cut_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
    { "help",    "Get help about available system commands.",  help_command,    1, 0 },
@@ -50,7 +51,32 @@ commands command_list[ MAX_COMMANDS ] = {
    { "bash",    "Bash a process (by pid) for 1-3 damage.",    bash_command,    1, 1 },
    { "hack",    "Hack a process with arrow keys for energy.", hack_command,    1, 1 },
    { "stats",   "Print stats about the ulogin process.",      stats_command,   1, 0 },
+   { "cut",     "Cut a process (by pid) for 3-6 damage.",     cut_command,     0, 1 },
 };
+
+
+void learn_new_command( int user_level )
+{
+   // Learn a new command every other level reached.
+   if ( user_level & 2 )
+   {
+      for ( int i = 0 ; i < MAX_COMMANDS ; i++ )
+      {
+         if ( !command_list[ i ].available )
+         {
+            char line[ 80 ];
+            command_list[ i ].available = 1;
+            sprintf( line, "![%04d]: ulogin learned %s.",
+                  GetPlayer( )->pid, command_list[ i ].name );
+            add_chat_message( line );
+            return;
+         }
+      }
+   }
+
+   return;
+}
+
 
 int system_command( args *arguments )
 {
@@ -122,9 +148,12 @@ void help_command( args *arguments )
 
    for ( int i = 0 ; i < MAX_COMMANDS ; i++ )
    {
-      sprintf( line, "  %-10s | %s",
-               command_list[ i ].name, command_list[ i ].help );
-      add_message( line );
+      if ( command_list[ i ].available )
+      {
+         sprintf( line, "  %-10s | %s",
+                  command_list[ i ].name, command_list[ i ].help );
+         add_message( line );
+      }
    }
 
    return;
@@ -294,3 +323,37 @@ void stats_command( args *arguments )
 
    return;
 }
+
+
+void cut_command( args *arguments )
+{
+   process_t *proc;
+
+   if ( arguments->num_args < 2 ) 
+   {
+      add_message( "Usage is cut <pid>" );
+   }
+   else
+   {
+      proc = find_process_by_pid( atoi( arguments->args[ 1 ] ) );
+      if ( proc == (process_t *)0 )
+      {
+         add_message( "Pid not found." );
+      }
+      else
+      {
+         if ( hit( getPlayerAttack( ), proc->stats.defense ) )
+         {
+            char line[80];
+            int  damage = 3 + getRand( 3 );
+            damageProcess( proc, damage );
+            sprintf( line, "[%04d] hit for %d energy", proc->pid, damage );
+            add_chat_message( line );
+         }
+      }
+   }
+
+   return;
+}
+
+
