@@ -451,6 +451,8 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the hack command and the QTE system.
 
+- [ ]  Implement the ability to learn new commands at gained levels.
+
 - [ ]  Implement the cut command.
 
 - [ ]  Implement the suspend command.
@@ -477,7 +479,7 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the daemon process.
 
-- [ ]  Implement the encrypt process.
+- [x]  Implement the encrypt process.
 
 - [x]  Implement the cron process (charges up, high attack, low frequency of attack).
 
@@ -498,6 +500,8 @@ or a path from entry to exit nodes.
 - [x]  Implement network initialization via network templates.
 
 - [ ]  Implement the end game (perhaps in the context of the Executive process).
+
+- [ ]  Implement command history (using up and down arrows).
 
 - [x]  Add an 'H' field to attributes display to show processes that are hackable.
 

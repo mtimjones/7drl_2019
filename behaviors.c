@@ -132,3 +132,18 @@ void cron_behavior( process_t *process, int action )
 
    return;
 }
+
+
+void encrypt_behavior( process_t *process, int action )
+{
+   if ( action == PROCESS_INIT )
+   {
+      char line[ 80 ];
+      sprintf( line, "[%04d]: %s concealing pids.", getRand( 9998 )+1 , process->name );
+      add_message( line );
+   }
+
+   return;
+}
+
+

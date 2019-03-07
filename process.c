@@ -151,12 +151,71 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->stats.base_damage = 10;
          process->stats.ext_damage = 3*level;
          break;
+      case Encrypt:
+         strcpy( process->name, "encrypt" );
+         process->process_type = type;
+         process->pid = getRand( 9999 );
+         process->attributes.hackable = 0;
+         process->attributes.buff = 0;
+         process->attributes.active = 1;
+         process->attributes.attack = 0;
+         process->stats.level = level;
+         process->stats.attack = 0;
+         process->stats.defense = level + getRand( 2 );
+         process->stats.max_energy = process->stats.energy = 18+2*level;
+         process->action_rate = 1;
+         process->function = &encrypt_behavior;
+         process->stats.base_damage = 0;
+         process->stats.ext_damage = 0;
+         break;
 
       default:
          break;
    }
 
    return process;
+}
+
+
+int encrypt_process_active( void )
+{
+   for ( int i = 0 ; i < MAX_PROCESSES_PER_NODE ; i++ )
+   {
+      if ( is_process_active( current_node( )->processes[ i ] ) )
+      {
+         if ( current_node( )->processes[ i ]->process_type == Encrypt )
+         {
+            return 1;
+         }
+      }
+   }
+
+   return 0;
+}
+
+unsigned short getPid( unsigned short pid, process_type_t process_type )
+{
+   int encrypt = encrypt_process_active( );
+   float limit;
+
+   if ( encrypt )
+   {
+      if ( process_type == Encrypt )
+      {
+         limit = 0.1;
+      }
+      else
+      {
+         limit = 0.7;
+      }
+   
+      if ( getSRand( ) < limit )
+      {
+         return getRand( 9998 ) + 1;
+      }
+   }
+
+   return pid;
 }
 
 
@@ -168,7 +227,9 @@ void display_process( WINDOW *window, int line, process_t *process )
 
    if ( process->attributes.active )
    {
-      mvwprintw( window, line,  4, "%4d  ", process->pid );
+      mvwprintw( window, line,  4, "%4d  ", 
+         getPid( process->pid, process->process_type ) );
+
       mvwprintw( window, line, 10, "%-10s  ", process->name );
 // display if process not suspended.
       mvwprintw( window, line, 22, "%3d  ", (100 / process->action_rate ) );
