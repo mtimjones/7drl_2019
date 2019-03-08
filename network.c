@@ -343,6 +343,8 @@ void create_network( int level )
 
    cur_template = getRand( 6 );
 
+   memset( network, 0, sizeof( network ) );
+
    for ( rows = 0 ; rows < NETROWS ; rows++ )
    {
       for ( cols = 0 ; cols < NETCOLS ; cols++ )
