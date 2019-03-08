@@ -60,7 +60,7 @@ commands command_list[ MAX_COMMANDS ] = {
 void learn_new_command( int user_level )
 {
    // Learn a new command every other level reached.
-   if ( user_level & 2 )
+   if ( ( user_level >> 1 ) & 1 )
    {
       for ( int i = 0 ; i < MAX_COMMANDS ; i++ )
       {
@@ -68,7 +68,7 @@ void learn_new_command( int user_level )
          {
             char line[ 80 ];
             command_list[ i ].available = 1;
-            sprintf( line, "![%04d]: ulogin learned %s.",
+            sprintf( line, "![%04d] ulogin learned %s.",
                   GetPlayer( )->pid, command_list[ i ].name );
             add_chat_message( line );
             return;
@@ -367,6 +367,7 @@ void cut_command( args *arguments )
 void slice_command( args *arguments )
 {
    process_t *proc;
+   unsigned short pid;
 
    if ( arguments->num_args < 2 ) 
    {
@@ -374,7 +375,10 @@ void slice_command( args *arguments )
    }
    else
    {
-      proc = find_process_by_pid( atoi( arguments->args[ 1 ] ) );
+      pid = atoi ( arguments->args[ 1 ] );
+
+      proc = find_process_by_pid( pid );
+
       if ( proc == (process_t *)0 )
       {
          add_message( "Pid not found." );
@@ -382,6 +386,18 @@ void slice_command( args *arguments )
       else
       {
          attack( getPlayerAttack( ), proc, 5, 5 );
+
+         proc = find_process_before_pid( pid );
+         if ( proc )
+         {
+            attack( getPlayerAttack( ), proc, 2, 2 );
+         }
+
+         proc = find_process_after_pid( pid );
+         if ( proc )
+         {
+            attack( getPlayerAttack( ), proc, 2, 2 );
+         }
       }
    }
 

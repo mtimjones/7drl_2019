@@ -443,6 +443,57 @@ process_t *find_process_by_pid( unsigned short pid )
 }
 
 
+process_t *find_process_before_pid( unsigned short pid )
+{
+   process_t *proc = ( process_t * ) 0;
+
+   for ( int i = 0 ; i < MAX_PROCESSES_PER_NODE ; i++ )
+   {
+      if ( is_process_active( current_node()->processes[ i ] ) )
+      {
+         if ( current_node()->processes[ i ]->pid == pid )
+         {
+            while ( i >= 0 )
+            {
+               if ( is_process_active( current_node()->processes[ i ] ) )
+               {
+                  return current_node()->processes[ i ];
+               }
+               i--;
+            }
+         }
+      }
+   }
+
+   return ( process_t * ) 0;
+}
+
+
+process_t *find_process_after_pid( unsigned short pid )
+{
+   process_t *proc = ( process_t * ) 0;
+
+   for ( int i = 0 ; i < MAX_PROCESSES_PER_NODE ; i++ )
+   {
+      if ( is_process_active( current_node()->processes[ i ] ) )
+      {
+         if ( current_node()->processes[ i ]->pid == pid )
+         {
+            while ( i < MAX_PROCESSES_PER_NODE )
+            {
+               if ( is_process_active( current_node()->processes[ i ] ) )
+               {
+                  return current_node()->processes[ i ];
+               }
+               i++;
+            }
+         }
+      }
+   }
+
+   return GetPlayer( );
+}
+
 int connect_to_ip_address_from_node ( char *ip_adrs )
 {
    // Brute force, but this should work...
