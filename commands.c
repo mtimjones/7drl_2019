@@ -26,7 +26,7 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   10
+#define MAX_COMMANDS   11
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
@@ -40,6 +40,7 @@ void exit_command( args *arguments );
 void host_command( args *arguments );
 void stats_command( args *arguments );
 void cut_command( args *arguments );
+void slice_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
    { "help",    "Get help about available system commands.",  help_command,    1, 0 },
@@ -52,6 +53,7 @@ commands command_list[ MAX_COMMANDS ] = {
    { "hack",    "Hack a process with arrow keys for energy.", hack_command,    1, 1 },
    { "stats",   "Print stats about the ulogin process.",      stats_command,   1, 0 },
    { "cut",     "Cut a process (by pid) for 3-6 damage.",     cut_command,     0, 1 },
+   { "slice",   "Slice a process (by pid) and its neihbors.", slice_command,   0, 1 },
 };
 
 
@@ -166,6 +168,26 @@ void wait_command( args *arguments )
 }
 
 
+void attack ( int attack, process_t *proc, int base, int ext )
+{
+   int attack_buf, defense_buf;
+
+   get_process_buffs( &attack_buf, &defense_buf );
+
+   if ( hit( attack, proc->stats.defense + defense_buf ) )
+   {
+      char line[80];
+      int  damage = base + getRand( ext );
+
+      damageProcess( proc, damage );
+      sprintf( line, "[%04d] hit for %d energy", proc->pid, damage );
+      add_chat_message( line );
+   }
+
+   return;
+}
+
+
 void bash_command( args *arguments )
 {
    process_t *proc;
@@ -183,14 +205,7 @@ void bash_command( args *arguments )
       }
       else
       {
-         if ( hit( getPlayerAttack( ), proc->stats.defense ) )
-         {
-            char line[80];
-            int  damage = 1 + getRand( 3 );
-            damageProcess( proc, damage );
-            sprintf( line, "[%04d] hit for %d energy", proc->pid, damage );
-            add_chat_message( line );
-         }
+         attack( getPlayerAttack( ), proc, 2, 2 );
       }
    }
 
@@ -324,7 +339,6 @@ void stats_command( args *arguments )
    return;
 }
 
-
 void cut_command( args *arguments )
 {
    process_t *proc;
@@ -342,14 +356,32 @@ void cut_command( args *arguments )
       }
       else
       {
-         if ( hit( getPlayerAttack( ), proc->stats.defense ) )
-         {
-            char line[80];
-            int  damage = 3 + getRand( 3 );
-            damageProcess( proc, damage );
-            sprintf( line, "[%04d] hit for %d energy", proc->pid, damage );
-            add_chat_message( line );
-         }
+         attack( getPlayerAttack( ), proc, 3, 3 );
+      }
+   }
+
+   return;
+}
+
+
+void slice_command( args *arguments )
+{
+   process_t *proc;
+
+   if ( arguments->num_args < 2 ) 
+   {
+      add_message( "Usage is slice <pid>" );
+   }
+   else
+   {
+      proc = find_process_by_pid( atoi( arguments->args[ 1 ] ) );
+      if ( proc == (process_t *)0 )
+      {
+         add_message( "Pid not found." );
+      }
+      else
+      {
+         attack( getPlayerAttack( ), proc, 5, 5 );
       }
    }
 

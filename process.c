@@ -264,10 +264,12 @@ void display_process( WINDOW *window, int line, process_t *process )
    return;
 }
 
+
 void display_player( WINDOW *window, int line )
 {
    display_process( window, line, &ulogin );
 }
+
 
 int is_process_active( process_t *process )
 {

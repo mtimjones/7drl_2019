@@ -201,7 +201,7 @@ void create_network_processes( node_t *node, int level )
       }
    }
 
-   if ( getSRand( ) > 0.5 )
+   if ( getSRand( ) > 0.80 )
    {
       process = calloc( 1, sizeof( process_t ) );
       node->processes[ i++ ] = create_process( process, Encrypt, level );
@@ -275,11 +275,6 @@ void node_func( node_t *node, int state )
             ( node->processes[ index ]->function )( node->processes[ index ], PROCESS_INIT );
          }
       }
-
-   }
-   else
-   {
-
 
    }
 
