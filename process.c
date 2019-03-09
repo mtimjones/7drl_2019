@@ -16,13 +16,10 @@ void create_player( void )
    ulogin.attributes.user = 1;
    ulogin.attributes.active = 1;
 
-//   ulogin.stats.attack = 2;
-//   ulogin.stats.defense = 2;
-   ulogin.stats.attack = 7;
-   ulogin.stats.defense = 8;
+   ulogin.stats.attack = 2;
+   ulogin.stats.defense = 2;
 
-//   ulogin.stats.max_energy = ulogin.stats.energy = 20;
-   ulogin.stats.max_energy = ulogin.stats.energy = 100;
+   ulogin.stats.max_energy = ulogin.stats.energy = 30;
    ulogin.stats.level = 1;
    ulogin.stats.xp = 0;
    ulogin.stats.xp_to_next_level = 20;
@@ -70,7 +67,7 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->stats.max_energy = process->stats.energy = 10+level;
          process->action_rate = getRand(2)+1;
          process->function = &daemon_behavior;
-         process->stats.base_damage = level/2;
+         process->stats.base_damage = level;
          process->stats.ext_damage = level;
          break;
       case Fork:
@@ -149,10 +146,10 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->stats.level = level;
          process->stats.attack = level;
          process->stats.defense = level;
-         process->stats.max_energy = process->stats.energy = 17+level;
+         process->stats.max_energy = process->stats.energy = 25+level;
          process->action_rate = 8;
          process->function = &cron_behavior;
-         process->stats.base_damage = 5;
+         process->stats.base_damage = 8;
          process->stats.ext_damage = 5;
          break;
       case Encrypt:
