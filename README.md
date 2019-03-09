@@ -485,7 +485,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the random process.
 
-- [ ]  Implement the Executive process.
+- [x]  Implement the Executive process.
 
 - [ ]  Implement the death process and the morgue.
 
@@ -495,9 +495,9 @@ or a path from entry to exit nodes.
 
 - [x]  Fix the learned command rate.
 
-- [ ]  Complete level definion.
+- [x]  Complete level definion.
 
-- [ ]  Implement the end game (perhaps in the context of the Executive process).
+- [x]  Implement the end game (perhaps in the context of the Executive process).
 
 - [ ]  Implement command history (using up and down arrows).
 

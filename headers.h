@@ -78,3 +78,4 @@ node_t *pop_node( void );
 int get_level( void );
 int increment_level( void );
 void learn_new_command( int user_level );
+int check_network_completion( void );

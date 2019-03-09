@@ -174,7 +174,7 @@ void display_network_processes( WINDOW *win )
 void create_network_processes( node_t *node, int level )
 {
    int i = 0;
-   const int proclimit[ 6 ] = { 1, 2, 3, 5, 7, 8 };
+   const int proclimit[ 6 ] = { 1, 2, 3, 4, 5 };
    int limit = 2 + getRand( proclimit[ level-1 ] );
    process_t *process;
 
@@ -183,17 +183,18 @@ void create_network_processes( node_t *node, int level )
       switch( level )
       {
          case 1:  // First level only daemons
+         case 3:
             process = calloc( 1, sizeof( process_t ) );
             node->processes[ i++ ] = create_process( process, Fork, level );
             break;
          case 2:
+         case 4:
             process = calloc( 1, sizeof( process_t ) );
             node->processes[ i++ ] = create_process( process, Cron, level );
             break;
-         case 3:  // Fork
-         case 4:
-         case 5:
-         case 6:  // Final level, introduce the executive
+         case 5:  // Final level, introduce the executive
+            process = calloc( 1, sizeof( process_t ) );
+            node->processes[ i++ ] = create_process( process, Executive, level );
             break;
          default:
             assert( 0 );
@@ -396,13 +397,29 @@ void execute_network( void )
 {
    int row = current_node()->row;
    int col = current_node()->col;
-   int active = 0;
 
    for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
    {
       if ( is_process_active( current_node()->processes[ index ] ) )
       {
          schedule_process( current_node()->processes[ index ] );
+      }
+   }
+
+   return;
+}
+
+
+int check_network_completion( void )
+{
+   int row = current_node()->row;
+   int col = current_node()->col;
+   int active = 0;
+
+   for ( int index = 0 ; index < MAX_PROCESSES_PER_NODE ; index++ )
+   {
+      if ( is_process_active( current_node()->processes[ index ] ) )
+      {
          active++;
       }
    }
@@ -410,18 +427,25 @@ void execute_network( void )
    // If this is the exit node, and it's clear, drop into the next level.
    if ( ( templates[ cur_template ][ row ][ col ] & EXIT ) && ( active == 0 ) )
    {
-      add_chat_message( "!Level complete.  Process migrating." );
+      if ( get_level( ) == 5 )
+      {
+         return 1;
+      }
+      else
+      {
+         add_chat_message( "!Level complete.  Process migrating." );
 
-      free_network( );
+         free_network( );
 
-      increment_level( );
+         increment_level( );
 
-      clear_network_window( );
+         clear_network_window( );
 
-      create_network( get_level( ) );
+         create_network( get_level( ) );
+      }
    }
 
-   return;
+   return 0;
 }
 
 

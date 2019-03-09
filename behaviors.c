@@ -181,12 +181,9 @@ void executive_behavior( process_t *process, int action )
    }
    else if ( action == PROCESS_DEATH )
    {
-      if ( --lives == 0 )
+      if ( --lives )
       {
-      }
-      else
-      {
-         process->stats.energy = 40;
+         process->stats.energy = 60;
          process->attributes.active = 1;
          sprintf( line, "[%04d] %s respawned.", 
                   process->pid, process->name );

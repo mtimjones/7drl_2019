@@ -57,9 +57,17 @@ int main( int argc, char *argv[] )
 
       if ( isPlayerDead( ) )
       {
-         add_chat_message( "You have died." );
+         add_chat_message( "!You have died." );
          win_update( );
          // AddToMorgue( );
+         sleep( 5 );
+         break;
+      }
+
+      if ( check_network_completion( ) )
+      {
+         add_chat_message( "!You have won." );
+         win_update( );
          sleep( 5 );
          break;
       }

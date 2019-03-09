@@ -16,9 +16,13 @@ void create_player( void )
    ulogin.attributes.user = 1;
    ulogin.attributes.active = 1;
 
-   ulogin.stats.attack = 2;
-   ulogin.stats.defense = 2;
-   ulogin.stats.max_energy = ulogin.stats.energy = 20;
+//   ulogin.stats.attack = 2;
+//   ulogin.stats.defense = 2;
+   ulogin.stats.attack = 7;
+   ulogin.stats.defense = 8;
+
+//   ulogin.stats.max_energy = ulogin.stats.energy = 20;
+   ulogin.stats.max_energy = ulogin.stats.energy = 100;
    ulogin.stats.level = 1;
    ulogin.stats.xp = 0;
    ulogin.stats.xp_to_next_level = 20;
@@ -45,7 +49,7 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.active = 1;
          process->attributes.attack = 1;
          process->stats.level = level;
-         process->stats.attack = level+1;
+         process->stats.attack = level;
          process->stats.defense = level;
          process->stats.max_energy = process->stats.energy = 10+getRand((level*2));
          process->action_rate = getRand(3)+1;
@@ -62,11 +66,11 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.attack = 1;
          process->stats.level = level;
          process->stats.attack = level;
-         process->stats.defense = level+1;
+         process->stats.defense = level;
          process->stats.max_energy = process->stats.energy = 10+level;
          process->action_rate = getRand(2)+1;
          process->function = &daemon_behavior;
-         process->stats.base_damage = level;
+         process->stats.base_damage = level/2;
          process->stats.ext_damage = level;
          break;
       case Fork:
@@ -78,7 +82,7 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.special = 1;
          process->stats.level = level;
          process->stats.attack = 0;
-         process->stats.defense = level+3;
+         process->stats.defense = level;
          process->stats.max_energy = process->stats.energy = 20+level;
          process->action_rate = 2;
          process->function = &fork_behavior;
@@ -94,12 +98,12 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.attack = 1;
          process->stats.level = level;
          process->stats.attack = level;
-         process->stats.defense = level + getRand( 2 );
+         process->stats.defense = level;
          process->stats.max_energy = process->stats.energy = 10+2*level;
          process->action_rate = 1;
          process->function = &daemon_behavior;
          process->stats.base_damage = 2;
-         process->stats.ext_damage = 2*level;
+         process->stats.ext_damage = 2;
          break;
       case Sentry:
          strcpy( process->name, "sentry" );
@@ -111,7 +115,7 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.attack = 0;
          process->stats.level = level;
          process->stats.attack = 0;
-         process->stats.defense = level + getRand( 2 );
+         process->stats.defense = level;
          process->stats.max_energy = process->stats.energy = 15+2*level;
          process->action_rate = 1;
          process->function = &sentry_behavior;
@@ -128,7 +132,7 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.attack = 0;
          process->stats.level = level;
          process->stats.attack = 0;
-         process->stats.defense = level + getRand( 2 );
+         process->stats.defense = level;
          process->stats.max_energy = process->stats.energy = 15+2*level;
          process->action_rate = 1;
          process->function = &armor_behavior;
@@ -142,14 +146,14 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.hackable = 0;
          process->attributes.active = 1;
          process->attributes.attack = 1;
-         process->stats.level = level+2;
-         process->stats.attack = level+2;
+         process->stats.level = level;
+         process->stats.attack = level;
          process->stats.defense = level;
          process->stats.max_energy = process->stats.energy = 17+level;
          process->action_rate = 8;
          process->function = &cron_behavior;
-         process->stats.base_damage = 10;
-         process->stats.ext_damage = 3*level;
+         process->stats.base_damage = 5;
+         process->stats.ext_damage = 5;
          break;
       case Encrypt:
          strcpy( process->name, "encrypt" );
@@ -161,7 +165,7 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.attack = 0;
          process->stats.level = level;
          process->stats.attack = 0;
-         process->stats.defense = level + getRand( 2 );
+         process->stats.defense = level;
          process->stats.max_energy = process->stats.energy = 18+2*level;
          process->action_rate = 1;
          process->function = &encrypt_behavior;
@@ -177,13 +181,13 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->attributes.active = 1;
          process->attributes.attack = 1;
          process->stats.level = level;
-         process->stats.attack = level + getRand( level );
-         process->stats.defense = level + getRand( level );
-         process->stats.max_energy = process->stats.energy = 40;
-         process->action_rate = 1;
+         process->stats.attack = level+1;
+         process->stats.defense = level+1;
+         process->stats.max_energy = process->stats.energy = 60;
+         process->action_rate = 2;
          process->function = &executive_behavior;
          process->stats.base_damage = 5;
-         process->stats.ext_damage = 3;
+         process->stats.ext_damage = 4;
          break;
 
       default:
@@ -395,7 +399,10 @@ void damageProcess( process_t *process, int damage )
             learn_new_command( ulogin.stats.level );
          }
 
-         remove_process_from_node( process );
+         if ( !process->attributes.active )
+         {
+            remove_process_from_node( process );
+         }
       }
 
    }
