@@ -437,8 +437,6 @@ or a path from entry to exit nodes.
 
 - [x]  Implement the hack command.
 
-- [ ]  Tune the hack process (display arrows instead of UP DOWN, etc.).
-
 - [x]  Implement the conflict system.
 
 - [x]  Implement the experience and level system.
@@ -459,7 +457,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the wall command.
 
-- [ ]  Implement the kill command.
+- [x]  Implement the kill command.
 
 - [ ]  Implement the trap command.
 
@@ -469,11 +467,7 @@ or a path from entry to exit nodes.
 
 - [ ]  Implement the counter command.
 
-- [ ]  Implement the slice command.
-
-- [ ]  Implement the TBD buff command.
-
-- [ ]  Implement the ulogin process callback function.
+- [x]  Implement the slice command.
 
 - [x]  Implement the sentry process.
 
@@ -498,6 +492,10 @@ or a path from entry to exit nodes.
 - [x]  Implement a way for processes to communicate with the user (via chat).
 
 - [x]  Implement network initialization via network templates.
+
+- [x]  Fix the learned command rate.
+
+- [ ]  Complete level definion.
 
 - [ ]  Implement the end game (perhaps in the context of the Executive process).
 

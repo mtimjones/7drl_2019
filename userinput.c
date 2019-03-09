@@ -139,6 +139,7 @@ void handle_user_input( void )
             add_chat_message( "Hack failed." );
             mode = NORMAL;
             GetPlayer( )->stats.hack_failures++;
+// @TODO: Need to execute the network to get to the next level
             hack.target->attributes.hackable = 0;
          }
       }

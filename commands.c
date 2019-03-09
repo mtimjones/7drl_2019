@@ -26,7 +26,7 @@ typedef struct
 
 } commands;
 
-#define MAX_COMMANDS   11
+#define MAX_COMMANDS   12
 
 #define MAX( a, b ) ( ( (a) > (b) ) ? (a) : (b) )
 
@@ -41,6 +41,7 @@ void host_command( args *arguments );
 void stats_command( args *arguments );
 void cut_command( args *arguments );
 void slice_command( args *arguments );
+void kill_command( args *arguments );
 
 commands command_list[ MAX_COMMANDS ] = {
    { "help",    "Get help about available system commands.",  help_command,    1, 0 },
@@ -54,13 +55,16 @@ commands command_list[ MAX_COMMANDS ] = {
    { "stats",   "Print stats about the ulogin process.",      stats_command,   1, 0 },
    { "cut",     "Cut a process (by pid) for 3-6 damage.",     cut_command,     0, 1 },
    { "slice",   "Slice a process (by pid) and its neihbors.", slice_command,   0, 1 },
+   { "kill",    "Kill a process (by pid) for 6-9 damage.",    kill_command,    0, 1 },
 };
 
 
 void learn_new_command( int user_level )
 {
+   const int learn_a_new_command[ 10 ] = { 0, 0, 1, 0, 1, 0, 1, 0, 0, 0 };
+
    // Learn a new command every other level reached.
-   if ( ( user_level >> 1 ) & 1 )
+   if ( learn_a_new_command[ user_level-1 ] )
    {
       for ( int i = 0 ; i < MAX_COMMANDS ; i++ )
       {
@@ -356,7 +360,7 @@ void cut_command( args *arguments )
       }
       else
       {
-         attack( getPlayerAttack( ), proc, 3, 3 );
+         attack( getPlayerAttack( ), proc, 3, 4 );
       }
    }
 
@@ -385,7 +389,7 @@ void slice_command( args *arguments )
       }
       else
       {
-         attack( getPlayerAttack( ), proc, 5, 5 );
+         attack( getPlayerAttack( ), proc, 3, 3 );
 
          proc = find_process_before_pid( pid );
          if ( proc )
@@ -398,6 +402,31 @@ void slice_command( args *arguments )
          {
             attack( getPlayerAttack( ), proc, 2, 2 );
          }
+      }
+   }
+
+   return;
+}
+
+
+void kill_command( args *arguments )
+{
+   process_t *proc;
+
+   if ( arguments->num_args < 2 ) 
+   {
+      add_message( "Usage is cut <pid>" );
+   }
+   else
+   {
+      proc = find_process_by_pid( atoi( arguments->args[ 1 ] ) );
+      if ( proc == (process_t *)0 )
+      {
+         add_message( "Pid not found." );
+      }
+      else
+      {
+         attack( getPlayerAttack( ), proc, 6, 4 );
       }
    }
 

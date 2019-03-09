@@ -168,6 +168,23 @@ process_t *create_process( process_t *process, process_type_t type, int level )
          process->stats.base_damage = 0;
          process->stats.ext_damage = 0;
          break;
+      case Executive:
+         strcpy( process->name, "executive" );
+         process->process_type = type;
+         process->pid = getRand( 9999 );
+         process->attributes.hackable = 0;
+         process->attributes.buff = 0;
+         process->attributes.active = 1;
+         process->attributes.attack = 1;
+         process->stats.level = level;
+         process->stats.attack = level + getRand( level );
+         process->stats.defense = level + getRand( level );
+         process->stats.max_energy = process->stats.energy = 40;
+         process->action_rate = 1;
+         process->function = &executive_behavior;
+         process->stats.base_damage = 5;
+         process->stats.ext_damage = 3;
+         break;
 
       default:
          break;
@@ -314,6 +331,8 @@ int getPlayerAttack( void )
 
 void damageProcess( process_t *process, int damage )
 {
+   char line[ 80 ];
+
    if ( process->process_type == User )
    {
       ulogin.stats.damage_received += damage;
@@ -326,16 +345,26 @@ void damageProcess( process_t *process, int damage )
    process->stats.energy -= damage;
    if ( process->stats.energy <= 0 )
    {
-      ulogin.stats.kills++;
       process->stats.energy = 0;
       process->attributes.active = 0;
-      char line[ 80 ];
-      sprintf( line, "[%04d] Process has exited.", process->pid );
-      add_message( line );
+
+      // Invoke the death function.
+      if ( ( process->function ) && ( process->process_type != User ) )
+      {
+         ( process->function )( process, PROCESS_DEATH );
+      }
+
+      if ( !process->stats.energy )      
+      {
+         sprintf( line, "[%04d] Process has exited.", process->pid );
+         add_message( line );
+      }
 
       // Add xp earned to the player.
       if ( process->process_type != User )
       {
+         ulogin.stats.kills++;
+
          ulogin.stats.xp += ( ( process->stats.attack + process->stats.defense ) );
          if ( ulogin.stats.xp >= ulogin.stats.xp_to_next_level )
          {

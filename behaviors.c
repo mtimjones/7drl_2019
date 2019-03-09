@@ -147,3 +147,55 @@ void encrypt_behavior( process_t *process, int action )
 }
 
 
+void executive_behavior( process_t *process, int action )
+{
+   char line[ 80 ];
+   int  attack, defense;
+   static int lives = 2;
+
+   if ( action == PROCESS_INIT )
+   {
+      sprintf( line, "[%04d] %s: prepare to die.", process->pid, process->name );
+      add_message( line );
+   }
+   else if ( action == PROCESS_EXECUTE )
+   {
+      if ( ++process->state_value >= process->action_rate )
+      {
+         process->state_value = 0;
+
+         get_process_buffs( &attack, &defense );
+
+         if ( hit( process->stats.attack + attack, getPlayerDefense( ) ) )
+         {
+            int damage = process->stats.base_damage + 
+                         getRand( process->stats.ext_damage );
+            sprintf( line, "[%04d] %s hits for %d.", 
+                     process->pid, process->name, damage );
+            add_chat_message( line );
+            damageProcess( GetPlayer( ), damage );
+         }
+         
+      }
+
+   }
+   else if ( action == PROCESS_DEATH )
+   {
+      if ( --lives == 0 )
+      {
+      }
+      else
+      {
+         process->stats.energy = 40;
+         process->attributes.active = 1;
+         sprintf( line, "[%04d] %s respawned.", 
+                  process->pid, process->name );
+         add_message( line );
+      }
+
+   }
+
+   return;
+}
+
+
